@@ -1,0 +1,51 @@
+//
+//  NSManagedObjectContext+PSCCoreDataHelper.m
+//  Companion
+//
+//  Created by Philip Messlehner on 28.02.13.
+//  Copyright (c) 2013 Philip Messlehner. All rights reserved.
+//
+
+#import "NSManagedObjectContext+PSCCoreDataHelper.h"
+
+@implementation NSManagedObjectContext (PSCCoreDataHelper)
+
+- (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType {
+    NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
+    childContext.parentContext = self;
+    return childContext;
+}
+
+- (NSManagedObjectContext *)newChildContext {
+    return [self newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
+}
+
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error {
+    if (self.hasChanges) {
+        [self performBlockAndWait:^{
+            [self save:error];
+        }];
+    }
+    
+    if (error != nil || self.parentContext == nil) {
+        return;
+    }
+    
+    void (^saveParent)(void) = ^{
+        [self.parentContext save:error];
+    };
+    
+    if (self.parentContext.hasChanges) {
+        if (wait) {
+            [self.parentContext performBlockAndWait:saveParent];
+        } else {
+            [self.parentContext performBlock:saveParent];
+        }
+    }
+}
+
+- (void)saveAndPropagateToParentContext:(NSError **)error {
+    [self saveAndPropagateToParentContextBlocking:NO error:error];
+}
+
+@end
