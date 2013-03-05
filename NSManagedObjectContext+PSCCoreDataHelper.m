@@ -17,17 +17,21 @@
 }
 
 - (NSManagedObjectContext *)newChildContext {
-    return [self newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
+    return [self newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error {
     if (self.hasChanges) {
-        [self performBlockAndWait:^{
+        if (self.concurrencyType == NSConfinementConcurrencyType) {
             [self save:error];
-        }];
+        } else {
+            [self performBlockAndWait:^{
+                [self save:error];
+            }];
+        }
     }
     
-    if (error != nil || self.parentContext == nil) {
+    if (*error != nil || self.parentContext == nil) {
         return;
     }
     
@@ -36,7 +40,9 @@
     };
     
     if (self.parentContext.hasChanges) {
-        if (wait) {
+        if (self.parentContext.concurrencyType == NSConfinementConcurrencyType) {
+            saveParent();
+        } else if (wait) {
             [self.parentContext performBlockAndWait:saveParent];
         } else {
             [self.parentContext performBlock:saveParent];
