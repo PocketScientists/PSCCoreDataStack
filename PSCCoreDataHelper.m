@@ -11,6 +11,7 @@
 @interface PSCCoreDataHelper ()
 
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
+@property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 @end
 
@@ -34,7 +35,7 @@
     
 }
 
-- (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
++ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSAssert(modelURL, @"Failed to find model URL");
     
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
@@ -43,14 +44,14 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
     NSAssert(persistentStoreCoordinator, @"Failed to initialize persistent store coordinator");
     
-    self.privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    self.privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    [self sharedHelper].privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [self sharedHelper].privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
     
-    self.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    self.mainContext.parentContext = self.privateContext;
+    [self sharedHelper].mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    [self sharedHelper].mainContext.parentContext = [self sharedHelper].privateContext;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *storeURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        NSURL *storeURL = [[[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
         storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
         
         NSError *error = nil;
@@ -67,21 +68,21 @@
     });
 }
 
-- (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
-    [self initializeCoreDataStackWithModelURL:modelURL storeFileName:storeFileName type:NSSQLiteStoreType configuration:nil options:@{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)} success:successBlock error:errorBlock];
++ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
+    [[self class] initializeCoreDataStackWithModelURL:modelURL storeFileName:storeFileName type:NSSQLiteStoreType configuration:nil options:@{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)} success:successBlock error:errorBlock];
 }
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Saving
 ////////////////////////////////////////////////////////////////////////
 
-- (void)saveAndPersistContextBlocking:(BOOL)wait {
++ (void)saveAndPersistContextBlocking:(BOOL)wait {
     NSError *error = nil;
-    [self.mainContext saveAndPropagateToParentContextBlocking:wait error:&error];
-    NSAssert(error == nil, @"Error saving context %@ %@\n%@", self.mainContext, [error localizedDescription], [error userInfo]);
+    [[self mainContext] saveAndPropagateToParentContextBlocking:wait error:&error];
+    NSAssert(error == nil, @"Error saving context %@ %@\n%@", [self sharedHelper].mainContext, [error localizedDescription], [error userInfo]);
 }
 
-- (void)saveAndPersistContext {
++ (void)saveAndPersistContext {
     [self saveAndPersistContextBlocking:NO];
 }
 
@@ -89,8 +90,12 @@
 #pragma mark - Parent-Child-Context for Threading
 ////////////////////////////////////////////////////////////////////////
 
-- (NSManagedObjectContext *)newChildContext {
-    return [self.mainContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
++ (NSManagedObjectContext *)newChildContext {
+    return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+}
+
++ (NSManagedObjectContext *)mainContext {
+    return [self sharedHelper].mainContext;
 }
 
 @end

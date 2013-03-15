@@ -15,14 +15,13 @@
 
 + (PSCCoreDataHelper *)sharedHelper;
 
-- (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
-- (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
++ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
++ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
 
-- (void)saveAndPersistContextBlocking:(BOOL)wait;
-- (void)saveAndPersistContext;
++ (void)saveAndPersistContextBlocking:(BOOL)wait;
++ (void)saveAndPersistContext;
 
-- (NSManagedObjectContext *)newChildContext;
-
-@property (nonatomic, strong) NSManagedObjectContext *mainContext;
++ (NSManagedObjectContext *)newChildContext;
++ (NSManagedObjectContext *)mainContext;
 
 @end
