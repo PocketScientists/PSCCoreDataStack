@@ -17,4 +17,6 @@
 
 + (void)addToWatcher:(PSCContextWatcher *)watcher withPredicate:(NSPredicate *)predicate;
 
+- (void)reset;
+
 @end

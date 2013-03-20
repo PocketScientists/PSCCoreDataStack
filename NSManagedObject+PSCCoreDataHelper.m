@@ -39,4 +39,8 @@
     [watcher addEntityClassToWatch:[self class] withPredicate:predicate];
 }
 
+- (void)reset {
+    [self.managedObjectContext refreshObject:self mergeChanges:NO];
+}
+
 @end
