@@ -44,6 +44,8 @@
 - (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate;
 - (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate;
 
+- (void)clearAllWatchedEntities;
+
 @property (nonatomic, assign) id<PSCContextWatcherDelegate> delegate;
 
 @end

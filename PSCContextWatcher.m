@@ -64,6 +64,10 @@
     [self addEntityToWatch:NSStringFromClass(class) withPredicate:predicate];
 }
 
+- (void)clearAllWatchedEntities {
+    self.masterPredicate = nil;
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Notification Handling
 ////////////////////////////////////////////////////////////////////////
