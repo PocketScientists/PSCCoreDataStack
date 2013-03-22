@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Philip Messlehner. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
-
 
 @interface NSManagedObjectContext (PSCCoreDataHelper)
 
