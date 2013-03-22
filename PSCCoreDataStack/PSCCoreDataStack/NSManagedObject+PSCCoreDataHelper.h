@@ -23,8 +23,6 @@
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 
-+ (void)addToWatcher:(PSCContextWatcher *)watcher withPredicate:(NSPredicate *)predicate;
-
 - (void)reset;
 - (void)delete;
 

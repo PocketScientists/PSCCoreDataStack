@@ -36,10 +36,6 @@
     return object;
 }
 
-+ (void)addToWatcher:(PSCContextWatcher *)watcher withPredicate:(NSPredicate *)predicate {
-    [watcher addEntityClassToWatch:[self class] withPredicate:predicate];
-}
-
 + (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     request.predicate = predicate;
