@@ -60,6 +60,12 @@
     [self addEntityNameToWatch:NSStringFromClass(entityClass) withPredicate:predicate];
 }
 
+- (void)addManangedObjectToWatch:(NSManagedObject *)managedObject {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectID = %@", managedObject.objectID];
+
+    [self addEntityToWatch:managedObject.entity withPredicate:predicate];
+}
+
 - (void)reset {
     self.masterPredicate = nil;
 }

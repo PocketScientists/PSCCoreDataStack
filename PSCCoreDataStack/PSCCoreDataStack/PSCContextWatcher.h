@@ -44,6 +44,8 @@
 - (void)addEntityToWatch:(NSEntityDescription *)entityDescription withPredicate:(NSPredicate *)predicate;
 - (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate;
 
+- (void)addManangedObjectToWatch:(NSManagedObject *)managedObject;
+
 - (void)reset;
 
 @end
