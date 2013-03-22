@@ -90,7 +90,7 @@
     }
 }
 
-- (void)delete {
+- (void)deleteFromContext {
     [self.managedObjectContext deleteObject:self];
 }
 

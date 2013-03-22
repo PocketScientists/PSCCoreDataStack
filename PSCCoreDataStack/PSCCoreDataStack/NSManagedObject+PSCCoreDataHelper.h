@@ -24,6 +24,6 @@
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 
 - (void)reset;
-- (void)delete;
+- (void)deleteFromContext;
 
 @end
