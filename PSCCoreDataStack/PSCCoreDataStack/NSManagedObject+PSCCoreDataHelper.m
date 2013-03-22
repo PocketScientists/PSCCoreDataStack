@@ -47,6 +47,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
 
     request.predicate = predicate;
+    request.resultType =  NSManagedObjectIDResultType;
 
     if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
