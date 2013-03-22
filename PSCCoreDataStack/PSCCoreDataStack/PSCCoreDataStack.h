@@ -7,9 +7,11 @@
 //
 
 #import <CoreData/CoreData.h>
+
 #import "NSManagedObject+PSCCoreDataHelper.h"
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
+#import "PSCFetchedResultsControllerUpdater.h"
 
 
 @interface PSCCoreDataStack : NSObject

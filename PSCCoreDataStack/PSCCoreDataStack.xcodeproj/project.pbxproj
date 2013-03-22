@@ -19,6 +19,8 @@
 		9B5FDB4B16FC65DA002FA5A6 /* PSCContextWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4616FC65DA002FA5A6 /* PSCContextWatcher.m */; };
 		9B5FDB4C16FC65DA002FA5A6 /* PSCCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4816FC65DA002FA5A6 /* PSCCoreDataStack.m */; };
 		9B5FDB4E16FC660C002FA5A6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */; };
+		9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */; };
+		9B5FDB5B16FC7387002FA5A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,9 @@
 		9B5FDB4716FC65DA002FA5A6 /* PSCCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCCoreDataStack.h; sourceTree = "<group>"; };
 		9B5FDB4816FC65DA002FA5A6 /* PSCCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCCoreDataStack.m; sourceTree = "<group>"; };
 		9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCFetchedResultsControllerUpdater.h; sourceTree = "<group>"; };
+		9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCFetchedResultsControllerUpdater.m; sourceTree = "<group>"; };
+		9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B5FDB5B16FC7387002FA5A6 /* UIKit.framework in Frameworks */,
 				9B5FDB4E16FC660C002FA5A6 /* CoreData.framework in Frameworks */,
 				9B5FDB1A16FC65AB002FA5A6 /* Foundation.framework in Frameworks */,
 			);
@@ -111,6 +117,7 @@
 		9B5FDB1816FC65AB002FA5A6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */,
 				9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */,
 				9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */,
 				9B5FDB2816FC65AC002FA5A6 /* SenTestingKit.framework */,
@@ -130,6 +137,8 @@
 				9B5FDB4616FC65DA002FA5A6 /* PSCContextWatcher.m */,
 				9B5FDB4716FC65DA002FA5A6 /* PSCCoreDataStack.h */,
 				9B5FDB4816FC65DA002FA5A6 /* PSCCoreDataStack.m */,
+				9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */,
+				9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */,
 				9B5FDB1C16FC65AB002FA5A6 /* Supporting Files */,
 			);
 			path = PSCCoreDataStack;
@@ -264,6 +273,7 @@
 				9B5FDB4A16FC65DA002FA5A6 /* NSManagedObjectContext+PSCCoreDataHelper.m in Sources */,
 				9B5FDB4B16FC65DA002FA5A6 /* PSCContextWatcher.m in Sources */,
 				9B5FDB4C16FC65DA002FA5A6 /* PSCCoreDataStack.m in Sources */,
+				9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
