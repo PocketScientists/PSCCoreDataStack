@@ -41,12 +41,12 @@
 
 @interface PSCContextWatcher : NSObject
 
-@property (nonatomic, assign) id<PSCContextWatcherDelegate> delegate;
+@property (nonatomic, weak) id<PSCContextWatcherDelegate> delegate;
 
 + (instancetype)watcherWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
-- (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate;
+- (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate;
 - (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate;
 
 - (void)clearAllWatchedEntities;

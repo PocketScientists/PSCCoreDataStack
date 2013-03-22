@@ -63,10 +63,10 @@
     }
 }
 
-- (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate {
-    NSParameterAssert(class != Nil);
+- (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate {
+    NSParameterAssert(entityClass != Nil);
     
-    [self addEntityToWatch:NSStringFromClass(class) withPredicate:predicate];
+    [self addEntityToWatch:NSStringFromClass(entityClass) withPredicate:predicate];
 }
 
 - (void)clearAllWatchedEntities {
