@@ -50,13 +50,31 @@
 #pragma mark - PSCContextWatcher
 ////////////////////////////////////////////////////////////////////////
 
-- (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate {
+- (void)addEntityToWatch:(NSEntityDescription *)entityDescription withPredicate:(NSPredicate *)predicate {
+    [self addEntityNameToWatch:[entityDescription name] withPredicate:predicate];
+}
+
+- (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate {
+    NSParameterAssert(entityClass != Nil);
+    
+    [self addEntityNameToWatch:NSStringFromClass(entityClass) withPredicate:predicate];
+}
+
+- (void)reset {
+    self.masterPredicate = nil;
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Private
+////////////////////////////////////////////////////////////////////////
+
+- (void)addEntityNameToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate {
     NSParameterAssert(name != nil);
     NSParameterAssert(predicate != nil);
 
     NSPredicate *entityPredicate = [NSPredicate predicateWithFormat:@"entity.name == %@", name];
     NSPredicate *finalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[entityPredicate, predicate]];
-    
+
     if (self.masterPredicate == nil) {
         self.masterPredicate = finalPredicate;
     } else {
@@ -64,18 +82,8 @@
     }
 }
 
-- (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate {
-    NSParameterAssert(entityClass != Nil);
-    
-    [self addEntityToWatch:NSStringFromClass(entityClass) withPredicate:predicate];
-}
-
-- (void)clearAllWatchedEntities {
-    self.masterPredicate = nil;
-}
-
 ////////////////////////////////////////////////////////////////////////
-#pragma mark - Notification Handling
+#pragma mark - NSNotification
 ////////////////////////////////////////////////////////////////////////
 
 - (void)contextDidSave:(NSNotification *)notification {
