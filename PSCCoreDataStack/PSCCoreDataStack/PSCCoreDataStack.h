@@ -16,8 +16,17 @@
 
 + (PSCCoreDataStack *)sharedHelper;
 
-+ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
-+ (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
++ (void)setupWithModelURL:(NSURL *)modelURL
+            storeFileName:(NSString *)storeFileName
+                     type:(NSString *)storeType
+            configuration:(NSString *)configuration
+                  options:(NSDictionary *)options
+                  success:(void(^)())successBlock
+                    error:(void(^)(NSError *error))errorBlock;
+
++ (void)setupWithModelURL:(NSURL *)modelURL
+autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
+                  success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
 + (void)saveAndPersistContext;
