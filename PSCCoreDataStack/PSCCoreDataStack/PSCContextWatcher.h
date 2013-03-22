@@ -28,24 +28,30 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+
+@protocol PSCContextWatcherDelegate;
+
+
+@interface PSCContextWatcher : NSObject
+
+@property (nonatomic, weak) id<PSCContextWatcherDelegate> delegate;
+
++ (instancetype)watcherWithContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
+
+- (void)addEntityToWatch:(NSEntityDescription *)entityDescription withPredicate:(NSPredicate *)predicate;
+- (void)addEntityClassToWatch:(Class)entityClass withPredicate:(NSPredicate *)predicate;
+
+- (void)addManangedObjectToWatch:(NSManagedObject *)managedObject;
+
+- (void)reset;
+
+@end
+
 
 @protocol PSCContextWatcherDelegate <NSObject>
 
 @required
-- (void)context:(NSManagedObjectContext *)context didSaveWithResults:(NSDictionary *)results;
-
-@end
-
-@interface PSCContextWatcher : NSObject
-
-+ (instancetype)watcherWithContext:(NSManagedObjectContext *)context;
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
-- (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate;
-- (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate;
-
-- (void)clearAllWatchedEntities;
-
-@property (nonatomic, assign) id<PSCContextWatcherDelegate> delegate;
+- (void)contextWatcher:(PSCContextWatcher *)watcher observedChanges:(NSDictionary *)changes inContext:(NSManagedObjectContext *)context;
 
 @end
