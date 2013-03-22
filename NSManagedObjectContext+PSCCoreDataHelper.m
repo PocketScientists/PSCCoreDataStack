@@ -13,6 +13,7 @@
 - (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType {
     NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
     childContext.parentContext = self;
+
     return childContext;
 }
 

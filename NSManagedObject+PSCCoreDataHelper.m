@@ -9,6 +9,7 @@
 #import "NSManagedObject+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
 
+
 @implementation NSManagedObject (PSCCoreDataHelper)
 
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context {
@@ -42,9 +43,11 @@
 + (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     request.predicate = predicate;
-    if (requestConfigurationBlock) {
+
+    if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
     }
+    
     NSArray *objects = [context executeFetchRequest:request error:error];
     
     if (objects.count > 0) {
@@ -61,10 +64,13 @@
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     request.predicate = predicate;
-    if (requestConfigurationBlock) {
+
+    if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
     }
+    
     NSArray *objects = [context executeFetchRequest:request error:error];
+
     return objects;
 }
 

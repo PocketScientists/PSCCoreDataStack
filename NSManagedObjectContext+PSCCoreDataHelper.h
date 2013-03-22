@@ -8,10 +8,12 @@
 
 #import <CoreData/CoreData.h>
 
+
 @interface NSManagedObjectContext (PSCCoreDataHelper)
 
 - (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType;
 - (NSManagedObjectContext *)newChildContext;
+
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error;
 - (void)saveAndPropagateToParentContext:(NSError **)error;
 

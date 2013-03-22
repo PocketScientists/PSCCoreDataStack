@@ -30,6 +30,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @protocol PSCContextWatcherDelegate <NSObject>
 
 @required
@@ -37,15 +38,17 @@
 
 @end
 
+
 @interface PSCContextWatcher : NSObject
 
+@property (nonatomic, assign) id<PSCContextWatcherDelegate> delegate;
+
 + (instancetype)watcherWithContext:(NSManagedObjectContext *)context;
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
+
 - (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate;
 - (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate;
 
 - (void)clearAllWatchedEntities;
-
-@property (nonatomic, assign) id<PSCContextWatcherDelegate> delegate;
 
 @end

@@ -8,7 +8,9 @@
 
 #import <CoreData/CoreData.h>
 
+
 @class PSCContextWatcher;
+
 
 @interface NSManagedObject (PSCCoreDataHelper)
 

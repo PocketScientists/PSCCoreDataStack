@@ -6,10 +6,11 @@
 //  Copyright (c) 2013 Philip Messlehner. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "NSManagedObject+PSCCoreDataHelper.h"
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
+
 
 @interface PSCCoreDataHelper : NSObject
 

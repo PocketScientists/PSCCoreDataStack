@@ -8,12 +8,14 @@
 
 #import "PSCCoreDataHelper.h"
 
+
 @interface PSCCoreDataHelper ()
 
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 @end
+
 
 @implementation PSCCoreDataHelper
 
@@ -29,10 +31,6 @@
     });
     
     return _sharedHelper;
-}
-
-- (void)dealloc {
-    
 }
 
 + (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {

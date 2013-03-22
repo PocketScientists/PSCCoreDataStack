@@ -8,12 +8,11 @@
 
 #import "PSCContextWatcher.h"
 
+
 @interface PSCContextWatcher ()
 
 @property (nonatomic, strong) NSPredicate *masterPredicate;
 @property (nonatomic, strong) NSManagedObjectContext *contextToWatch;
-
-- (void)contextUpdated:(NSNotification*)notification;
 
 @end
 
@@ -27,12 +26,14 @@
     return [[self alloc] initWithManagedObjectContext:context];
 }
 
-- (id)initWithManagedObjectContext:(NSManagedObjectContext*)context {
-    NSAssert(context, @"Context is nil!");
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
+    NSParameterAssert(context);
+    
     if ((self = [super init])) {
         _contextToWatch = context;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(contextUpdated:)
+                                                 selector:@selector(contextDidSave:)
                                                      name:NSManagedObjectContextDidSaveNotification
                                                    object:_contextToWatch];
     }
@@ -41,8 +42,7 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:self.contextToWatch];
-    self.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_contextToWatch];
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -72,32 +72,28 @@
 #pragma mark - Notification Handling
 ////////////////////////////////////////////////////////////////////////
 
-- (void)contextUpdated:(NSNotification*)notification {
+- (void)contextDidSave:(NSNotification *)notification {
     if (self.masterPredicate == nil) {
         return;
     }
-    
-    NSInteger totalCount = 0;
-    NSSet *temp = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
-    NSMutableSet *inserted = [temp mutableCopy];
+
+    NSMutableSet *inserted = [[[notification userInfo] objectForKey:NSInsertedObjectsKey] mutableCopy];
     [inserted filterUsingPredicate:[self masterPredicate]];
-    totalCount += inserted.count;
+
     
-    temp = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
-    NSMutableSet *deleted = [temp mutableCopy];
+    NSMutableSet *deleted = [[[notification userInfo] objectForKey:NSDeletedObjectsKey] mutableCopy];
     [deleted filterUsingPredicate:[self masterPredicate]];
-    totalCount += deleted.count;
+
     
-    temp = [[notification userInfo] objectForKey:NSUpdatedObjectsKey];
-    NSMutableSet *updated = [temp mutableCopy];
+    NSMutableSet *updated = [[[notification userInfo] objectForKey:NSUpdatedObjectsKey] mutableCopy];
     [updated filterUsingPredicate:[self masterPredicate]];
-    totalCount += updated.count;
     
-    if (totalCount == 0) {
+    if ((inserted.count + deleted.count + updated.count) == 0) {
         return;
     }
     
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
+
     if (inserted) {
         [results setObject:inserted forKey:NSInsertedObjectsKey];
     }
@@ -108,9 +104,7 @@
         [results setObject:updated forKey:NSUpdatedObjectsKey];
     }
     
-    if (self.delegate) {
-        [self.delegate context:self.contextToWatch didSaveWithResults:results];
-    }
+    [self.delegate context:self.contextToWatch didSaveWithResults:results];
 }
 
 @end
