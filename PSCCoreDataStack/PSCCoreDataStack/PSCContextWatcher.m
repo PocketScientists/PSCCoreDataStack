@@ -16,6 +16,7 @@
 
 @end
 
+
 @implementation PSCContextWatcher
 
 ////////////////////////////////////////////////////////////////////////
@@ -109,7 +110,7 @@
         [results setObject:updated forKey:NSUpdatedObjectsKey];
     }
     
-    [self.delegate context:self.contextToWatch didSaveWithResults:results];
+    [self.delegate contextWatcher:self observedChanges:results inContext:self.contextToWatch];
 }
 
 @end

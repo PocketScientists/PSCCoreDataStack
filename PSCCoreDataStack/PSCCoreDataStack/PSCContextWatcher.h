@@ -31,12 +31,7 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol PSCContextWatcherDelegate <NSObject>
-
-@required
-- (void)context:(NSManagedObjectContext *)context didSaveWithResults:(NSDictionary *)results;
-
-@end
+@protocol PSCContextWatcherDelegate;
 
 
 @interface PSCContextWatcher : NSObject
@@ -50,5 +45,13 @@
 - (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate;
 
 - (void)clearAllWatchedEntities;
+
+@end
+
+
+@protocol PSCContextWatcherDelegate <NSObject>
+
+@required
+- (void)contextWatcher:(PSCContextWatcher *)watcher observedChanges:(NSDictionary *)changes inContext:(NSManagedObjectContext *)context;
 
 @end
