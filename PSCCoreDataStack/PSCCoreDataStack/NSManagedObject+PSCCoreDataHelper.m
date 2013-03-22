@@ -13,10 +13,15 @@
 @implementation NSManagedObject (PSCCoreDataHelper)
 
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context {
+    NSParameterAssert(context != nil);
+    
     return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
 }
 
 + (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context {
+    NSParameterAssert(attribute != nil);
+    NSParameterAssert(context != nil);
+
     id object = nil;
     
     if (value != nil) {
@@ -37,7 +42,10 @@
 }
 
 + (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
+    NSParameterAssert(context != nil);
+
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+
     request.predicate = predicate;
 
     if (requestConfigurationBlock != nil) {
@@ -58,6 +66,8 @@
 }
 
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
+    NSParameterAssert(context != nil);
+
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     request.predicate = predicate;
 

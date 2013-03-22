@@ -27,7 +27,7 @@
 }
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
-    NSParameterAssert(context);
+    NSParameterAssert(context != nil);
     
     if ((self = [super init])) {
         _contextToWatch = context;
@@ -50,6 +50,9 @@
 ////////////////////////////////////////////////////////////////////////
 
 - (void)addEntityToWatch:(NSString *)name withPredicate:(NSPredicate *)predicate {
+    NSParameterAssert(name != nil);
+    NSParameterAssert(predicate != nil);
+
     NSPredicate *entityPredicate = [NSPredicate predicateWithFormat:@"entity.name == %@", name];
     NSPredicate *finalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[entityPredicate, predicate]];
     
@@ -61,6 +64,8 @@
 }
 
 - (void)addEntityClassToWatch:(Class)class withPredicate:(NSPredicate *)predicate {
+    NSParameterAssert(class != Nil);
+    
     [self addEntityToWatch:NSStringFromClass(class) withPredicate:predicate];
 }
 
