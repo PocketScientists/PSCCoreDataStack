@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Philip Messlehner. All rights reserved.
 //
 
-#import "PSCCoreDataHelper.h"
+#import "PSCCoreDataStack.h"
 
 
-@interface PSCCoreDataHelper ()
+@interface PSCCoreDataStack ()
 
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
@@ -17,14 +17,14 @@
 @end
 
 
-@implementation PSCCoreDataHelper
+@implementation PSCCoreDataStack
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Life Cycle
 ////////////////////////////////////////////////////////////////////////
 
-+ (PSCCoreDataHelper *)sharedHelper {
-    static PSCCoreDataHelper *_sharedHelper = nil;
++ (PSCCoreDataStack *)sharedHelper {
+    static PSCCoreDataStack *_sharedHelper = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         _sharedHelper = [self new];

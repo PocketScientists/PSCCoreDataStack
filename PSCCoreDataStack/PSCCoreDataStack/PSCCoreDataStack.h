@@ -12,9 +12,9 @@
 #import "PSCContextWatcher.h"
 
 
-@interface PSCCoreDataHelper : NSObject
+@interface PSCCoreDataStack : NSObject
 
-+ (PSCCoreDataHelper *)sharedHelper;
++ (PSCCoreDataStack *)sharedHelper;
 
 + (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
 + (void)initializeCoreDataStackWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
