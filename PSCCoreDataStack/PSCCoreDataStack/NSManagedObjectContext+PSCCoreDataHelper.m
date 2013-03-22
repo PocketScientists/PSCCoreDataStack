@@ -18,10 +18,6 @@
     return childContext;
 }
 
-- (NSManagedObjectContext *)newChildContext {
-    return [self newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
-}
-
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
     if (self.hasChanges) {
         if (self.concurrencyType == NSConfinementConcurrencyType) {
