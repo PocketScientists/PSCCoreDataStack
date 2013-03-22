@@ -107,8 +107,4 @@ static NSManagedObjectContext *psc_privateContext = nil;
     return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
-+ (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    return [self mainContext].persistentStoreCoordinator;
-}
-
 @end

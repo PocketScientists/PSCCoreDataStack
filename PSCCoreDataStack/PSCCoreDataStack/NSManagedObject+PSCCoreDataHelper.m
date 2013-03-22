@@ -108,6 +108,16 @@
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 
++ (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
+	NSFetchRequest *request = [self requestAllMatchingPredicate:predicate inContext:context error:error];
+
+    if (request != nil) {
+        return [context countForFetchRequest:request error:error];
+    } else {
+        return NSNotFound;
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Instance Methods
 ////////////////////////////////////////////////////////////////////////
