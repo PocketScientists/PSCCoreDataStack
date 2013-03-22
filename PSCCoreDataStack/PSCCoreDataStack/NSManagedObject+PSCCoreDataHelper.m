@@ -29,12 +29,16 @@
     id object = nil;
     
     if (value != nil) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
-        request.predicate = [NSPredicate predicateWithFormat:@"%K = %@", attribute, value];
-        request.fetchLimit = 1;
-        NSError *error;
-        
-        object = [[context executeFetchRequest:request error:&error] lastObject];
+        NSError *error = nil;
+        NSFetchRequest *request = [self requestFirstMatchingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", attribute, value]
+                                                            inContext:context
+                                                                error:&error];
+
+        if (request == nil) {
+            NSLog(@"Error fetching first object: %@ - %@", [error localizedDescription], [error userInfo]);
+        } else {
+            object = [[context executeFetchRequest:request error:&error] lastObject];
+        }
     }
     
     if (object == nil) {
@@ -45,7 +49,7 @@
     return object;
 }
 
-+ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
++ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     NSParameterAssert(context != nil);
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
@@ -66,15 +70,28 @@
     }
 }
 
-+ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
++ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     [self deleteAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 
-+ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(NSError **)error {
++ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     NSParameterAssert(context != nil);
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     request.predicate = predicate;
+
+    return request;
+}
+
++ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
+    NSFetchRequest *request = [self requestAllMatchingPredicate:predicate inContext:context error:error];
+
+    request.fetchLimit = 1;
+    return request;
+}
+
++ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
+    NSFetchRequest *request = [self requestAllMatchingPredicate:predicate inContext:context error:error];
 
     if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
@@ -85,7 +102,7 @@
     return objects;
 }
 
-+ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
++ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 

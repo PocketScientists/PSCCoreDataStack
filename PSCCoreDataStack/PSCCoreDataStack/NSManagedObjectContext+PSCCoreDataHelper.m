@@ -22,7 +22,7 @@
     return [self newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
-- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error {
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
     if (self.hasChanges) {
         if (self.concurrencyType == NSConfinementConcurrencyType) {
             [self save:error];
@@ -52,7 +52,7 @@
     }
 }
 
-- (void)saveAndPropagateToParentContext:(NSError **)error {
+- (void)saveAndPropagateToParentContext:(__autoreleasing NSError **)error {
     [self saveAndPropagateToParentContextBlocking:NO error:error];
 }
 
