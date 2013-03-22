@@ -25,9 +25,9 @@
             [self.tableView deleteSections:self.deletedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView insertSections:self.insertedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
 
-            [self.tableView deleteRowsAtIndexPaths:self.deletedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertRowsAtIndexPaths:self.insertedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView reloadRowsAtIndexPaths:self.updatedRowIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:self.deletedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:self.insertedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadRowsAtIndexPaths:self.updatedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 
             [self.tableView endUpdates];
         }
@@ -41,8 +41,8 @@
 @property (nonatomic, readonly) NSIndexSet *deletedSectionIndexes;
 @property (nonatomic, readonly) NSIndexSet *insertedSectionIndexes;
 
-@property (nonatomic, readonly) NSArray *deletedRowIndexPaths;
-@property (nonatomic, readonly) NSArray *insertedRowIndexPaths;
-@property (nonatomic, readonly) NSArray *updatedRowIndexPaths;
+@property (nonatomic, readonly) NSArray *deletedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray *insertedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray *updatedObjectIndexPaths;
 
 @end

@@ -12,9 +12,9 @@
 @implementation PSCFetchedResultsControllerUpdater {
     NSMutableIndexSet *_insertedSectionIndexes;
     NSMutableIndexSet *_deletedSectionIndexes;
-    NSMutableArray *_deletedRowIndexPaths;
-    NSMutableArray *_insertedRowIndexPaths;
-    NSMutableArray *_updatedRowIndexPaths;
+    NSMutableArray *_deletedObjectIndexPaths;
+    NSMutableArray *_insertedObjectIndexPaths;
+    NSMutableArray *_updatedObjectIndexPaths;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -23,8 +23,8 @@
 
 - (NSUInteger)numberOfTotalChanges {
     return ([self.deletedSectionIndexes count] + [self.insertedSectionIndexes count] +
-            [self.deletedRowIndexPaths count] + [self.insertedRowIndexPaths count] +
-            [self.updatedRowIndexPaths count]);
+            [self.deletedObjectIndexPaths count] + [self.insertedObjectIndexPaths count] +
+            [self.updatedObjectIndexPaths count]);
 }
 
 - (NSIndexSet *)deletedSectionIndexes {
@@ -43,28 +43,28 @@
     return _insertedSectionIndexes;
 }
 
-- (NSArray *)deletedRowIndexPaths {
-    if (_deletedRowIndexPaths == nil) {
-        _deletedRowIndexPaths = [[NSMutableArray alloc] init];
+- (NSArray *)deletedObjectIndexPaths {
+    if (_deletedObjectIndexPaths == nil) {
+        _deletedObjectIndexPaths = [[NSMutableArray alloc] init];
     }
 
-    return _deletedRowIndexPaths;
+    return _deletedObjectIndexPaths;
 }
 
-- (NSArray *)insertedRowIndexPaths {
-    if (_insertedRowIndexPaths == nil) {
-        _insertedRowIndexPaths = [[NSMutableArray alloc] init];
+- (NSArray *)insertedObjectIndexPaths {
+    if (_insertedObjectIndexPaths == nil) {
+        _insertedObjectIndexPaths = [[NSMutableArray alloc] init];
     }
 
-    return _insertedRowIndexPaths;
+    return _insertedObjectIndexPaths;
 }
 
-- (NSArray *)updatedRowIndexPaths {
-    if (_updatedRowIndexPaths == nil) {
-        _updatedRowIndexPaths = [[NSMutableArray alloc] init];
+- (NSArray *)updatedObjectIndexPaths {
+    if (_updatedObjectIndexPaths == nil) {
+        _updatedObjectIndexPaths = [[NSMutableArray alloc] init];
     }
 
-    return _updatedRowIndexPaths;
+    return _updatedObjectIndexPaths;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -75,9 +75,9 @@
     _insertedSectionIndexes = nil;
     _deletedSectionIndexes = nil;
 
-    _deletedRowIndexPaths = nil;
-    _insertedRowIndexPaths = nil;
-    _updatedRowIndexPaths = nil;
+    _deletedObjectIndexPaths = nil;
+    _insertedObjectIndexPaths = nil;
+    _updatedObjectIndexPaths = nil;
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
@@ -100,24 +100,24 @@
             return;
         }
 
-        [_insertedRowIndexPaths addObject:newIndexPath];
+        [_insertedObjectIndexPaths addObject:newIndexPath];
     } else if (type == NSFetchedResultsChangeDelete) {
         if ([_deletedSectionIndexes containsIndex:indexPath.section]) {
             // If we've already been told that we're deleting a section for this deleted row we skip it since it will handled by the section deletion.
             return;
         }
 
-        [_deletedRowIndexPaths addObject:indexPath];
+        [_deletedObjectIndexPaths addObject:indexPath];
     } else if (type == NSFetchedResultsChangeMove) {
         if ([_insertedSectionIndexes containsIndex:newIndexPath.section] == NO) {
-            [_insertedRowIndexPaths addObject:newIndexPath];
+            [_insertedObjectIndexPaths addObject:newIndexPath];
         }
 
         if ([_deletedSectionIndexes containsIndex:indexPath.section] == NO) {
-            [_deletedRowIndexPaths addObject:indexPath];
+            [_deletedObjectIndexPaths addObject:indexPath];
         }
     } else if (type == NSFetchedResultsChangeUpdate) {
-        [_updatedRowIndexPaths addObject:indexPath];
+        [_updatedObjectIndexPaths addObject:indexPath];
     }
 }
 
