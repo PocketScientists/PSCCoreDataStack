@@ -12,6 +12,10 @@
 
 @implementation NSManagedObject (PSCCoreDataHelper)
 
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Class Methods
+////////////////////////////////////////////////////////////////////////
+
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context != nil);
     
@@ -85,6 +89,10 @@
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Instance Methods
+////////////////////////////////////////////////////////////////////////
+
 - (void)reset {
     if (self.hasChanges) {
         [self.managedObjectContext refreshObject:self mergeChanges:NO];
@@ -93,6 +101,16 @@
 
 - (void)deleteFromContext {
     [self.managedObjectContext deleteObject:self];
+}
+
+- (id)userInfoValueForKey:(NSString *)key ofProperty:(NSString *)property {
+    for (NSPropertyDescription *propertyDescription in self.entity.properties) {
+        if ([propertyDescription.name isEqualToString:property]) {
+            return [[propertyDescription userInfo] valueForKey:key];
+        }
+    }
+    
+    return nil;
 }
 
 @end

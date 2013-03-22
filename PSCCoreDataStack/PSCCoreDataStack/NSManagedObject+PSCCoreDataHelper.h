@@ -26,4 +26,6 @@
 - (void)reset;
 - (void)deleteFromContext;
 
+- (id)userInfoValueForKey:(NSString *)key ofProperty:(NSString *)property;
+
 @end

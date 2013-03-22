@@ -99,11 +99,9 @@
 
     NSMutableSet *inserted = [[[notification userInfo] objectForKey:NSInsertedObjectsKey] mutableCopy];
     [inserted filterUsingPredicate:[self masterPredicate]];
-
     
     NSMutableSet *deleted = [[[notification userInfo] objectForKey:NSDeletedObjectsKey] mutableCopy];
     [deleted filterUsingPredicate:[self masterPredicate]];
-
     
     NSMutableSet *updated = [[[notification userInfo] objectForKey:NSUpdatedObjectsKey] mutableCopy];
     [updated filterUsingPredicate:[self masterPredicate]];
@@ -114,13 +112,13 @@
     
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
 
-    if (inserted) {
+    if (inserted != nil) {
         [results setObject:inserted forKey:NSInsertedObjectsKey];
     }
-    if (deleted) {
+    if (deleted != nil) {
         [results setObject:deleted forKey:NSDeletedObjectsKey];
     }
-    if (updated) {
+    if (updated != nil) {
         [results setObject:updated forKey:NSUpdatedObjectsKey];
     }
     
