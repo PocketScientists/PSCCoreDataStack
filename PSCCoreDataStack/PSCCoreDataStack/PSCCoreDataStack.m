@@ -9,12 +9,8 @@
 #import "PSCCoreDataStack.h"
 
 
-@interface PSCCoreDataStack ()
-
-@property (nonatomic, strong) NSManagedObjectContext *privateContext;
-@property (nonatomic, strong) NSManagedObjectContext *mainContext;
-
-@end
+static NSManagedObjectContext *psc_mainContext = nil;
+static NSManagedObjectContext *psc_privateContext = nil;
 
 
 @implementation PSCCoreDataStack
@@ -22,16 +18,6 @@
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Life Cycle
 ////////////////////////////////////////////////////////////////////////
-
-+ (PSCCoreDataStack *)sharedHelper {
-    static PSCCoreDataStack *_sharedHelper = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        _sharedHelper = [self new];
-    });
-    
-    return _sharedHelper;
-}
 
 + (void)setupWithModelURL:(NSURL *)modelURL storeFileName:(NSString *)storeFileName type:(NSString *)storeType configuration:(NSString *)configuration options:(NSDictionary *)options success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSAssert(modelURL, @"Failed to find model URL");
@@ -42,11 +28,11 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
     NSAssert(persistentStoreCoordinator, @"Failed to initialize persistent store coordinator");
     
-    [self sharedHelper].privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [self sharedHelper].privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    psc_privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    psc_privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
     
-    [self sharedHelper].mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [self sharedHelper].mainContext.parentContext = [self sharedHelper].privateContext;
+    psc_mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    psc_mainContext.parentContext = psc_privateContext;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURL *storeURL = [[[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
@@ -67,7 +53,7 @@
 }
 
 + (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
-    [[self class] initializeCoreDataStackWithModelURL:modelURL storeFileName:storeFileName type:NSSQLiteStoreType configuration:nil options:@{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)} success:successBlock error:errorBlock];
+    [[self class] setupWithModelURL:modelURL storeFileName:storeFileName type:NSSQLiteStoreType configuration:nil options:@{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)} success:successBlock error:errorBlock];
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -76,8 +62,9 @@
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait {
     NSError *error = nil;
+
     [[self mainContext] saveAndPropagateToParentContextBlocking:wait error:&error];
-    NSAssert(error == nil, @"Error saving context %@ %@\n%@", [self sharedHelper].mainContext, [error localizedDescription], [error userInfo]);
+    NSAssert(error == nil, @"Error saving context %@ %@\n%@", psc_mainContext, [error localizedDescription], [error userInfo]);
 }
 
 + (void)saveAndPersistContext {
@@ -88,12 +75,12 @@
 #pragma mark - Parent-Child-Context for Threading
 ////////////////////////////////////////////////////////////////////////
 
-+ (NSManagedObjectContext *)newChildContext {
-    return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
++ (NSManagedObjectContext *)mainContext {
+    return psc_mainContext;
 }
 
-+ (NSManagedObjectContext *)mainContext {
-    return [self sharedHelper].mainContext;
++ (NSManagedObjectContext *)newChildContext {
+    return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
 @end

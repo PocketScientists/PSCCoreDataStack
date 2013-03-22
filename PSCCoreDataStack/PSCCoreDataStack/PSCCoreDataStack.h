@@ -14,8 +14,6 @@
 
 @interface PSCCoreDataStack : NSObject
 
-+ (PSCCoreDataStack *)sharedHelper;
-
 + (void)setupWithModelURL:(NSURL *)modelURL
             storeFileName:(NSString *)storeFileName
                      type:(NSString *)storeType
@@ -31,7 +29,7 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
 + (void)saveAndPersistContext;
 
-+ (NSManagedObjectContext *)newChildContext;
 + (NSManagedObjectContext *)mainContext;
++ (NSManagedObjectContext *)newChildContext;
 
 @end
