@@ -21,6 +21,15 @@
 #pragma mark - PSCFetchedResultsControllerUpdater
 ////////////////////////////////////////////////////////////////////////
 
+- (void)reset {
+    _insertedSectionIndexes = nil;
+    _deletedSectionIndexes = nil;
+
+    _deletedRowIndexPaths = nil;
+    _insertedRowIndexPaths = nil;
+    _updatedRowIndexPaths = nil;
+}
+
 - (NSUInteger)numberOfTotalChanges {
     return ([self.deletedSectionIndexes count] + [self.insertedSectionIndexes count] +
             [self.deletedRowIndexPaths count] + [self.insertedRowIndexPaths count] +
@@ -72,12 +81,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    _insertedSectionIndexes = nil;
-    _deletedSectionIndexes = nil;
-
-    _deletedRowIndexPaths = nil;
-    _insertedRowIndexPaths = nil;
-    _updatedRowIndexPaths = nil;
+    [self reset];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {

@@ -31,6 +31,9 @@
 
             [self.tableView endUpdates];
         }
+ 
+        // optional
+        [self.updater reset];
  }
 
  */
@@ -44,5 +47,7 @@
 @property (nonatomic, readonly) NSArray *deletedRowIndexPaths;
 @property (nonatomic, readonly) NSArray *insertedRowIndexPaths;
 @property (nonatomic, readonly) NSArray *updatedRowIndexPaths;
+
+- (void)reset;
 
 @end

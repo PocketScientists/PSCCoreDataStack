@@ -28,8 +28,9 @@
                   requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock
                              inContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error;
-
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
+
++ (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 
 - (void)reset;
 - (void)deleteFromContext;
