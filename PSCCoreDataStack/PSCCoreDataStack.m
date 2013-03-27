@@ -34,10 +34,10 @@ static NSManagedObjectContext *psc_privateContext = nil;
     }
 
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    NSAssert(model != nil, @"Failed to initialize model");
+    NSAssert(model != nil, @"Failed to initialize model with URL: %@", modelURL);
 
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    NSAssert(persistentStoreCoordinator != nil, @"Failed to initialize persistent store coordinator");
+    NSAssert(persistentStoreCoordinator != nil, @"Failed to initialize persistent store coordinator with model: %@", model);
 
     psc_privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     psc_privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
@@ -109,7 +109,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
     return psc_mainContext;
 }
 
-+ (NSManagedObjectContext *)newChildContext {
++ (NSManagedObjectContext *)newChildContextWithPrivateQueue {
     return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
