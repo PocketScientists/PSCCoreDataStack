@@ -12,6 +12,7 @@
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
 #import "PSCFetchedResultsControllerUpdater.h"
+#import "PSCPersistenceOperation.h"
 
 
 @interface PSCCoreDataStack : NSObject
@@ -32,6 +33,6 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 + (void)saveAndPersistContext;
 
 + (NSManagedObjectContext *)mainContext;
-+ (NSManagedObjectContext *)newChildContext;
++ (NSManagedObjectContext *)newChildContextWithPrivateQueue;
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B17A9F617025C8300DEF0B9 /* PSCPersistenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */; };
 		9B5FDB1A16FC65AB002FA5A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */; };
 		9B5FDB2916FC65AC002FA5A6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB2816FC65AC002FA5A6 /* SenTestingKit.framework */; };
 		9B5FDB2C16FC65AC002FA5A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */; };
@@ -45,6 +46,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B17A9F417025C8300DEF0B9 /* PSCPersistenceOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCPersistenceOperation.h; sourceTree = "<group>"; };
+		9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCPersistenceOperation.m; sourceTree = "<group>"; };
 		9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPSCCoreDataStack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9B5FDB1D16FC65AB002FA5A6 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -96,8 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				9B5FDB1B16FC65AB002FA5A6 /* PSCCoreDataStack */,
-				9B5FDB3016FC65AC002FA5A6 /* PSCCoreDataStackTests */,
 				9B5FDB1816FC65AB002FA5A6 /* Frameworks */,
+				9B5FDB3016FC65AC002FA5A6 /* PSCCoreDataStackTests */,
 				9B5FDB1716FC65AB002FA5A6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,6 +138,8 @@
 				9B5FDB4816FC65DA002FA5A6 /* PSCCoreDataStack.m */,
 				9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */,
 				9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */,
+				9B17A9F417025C8300DEF0B9 /* PSCPersistenceOperation.h */,
+				9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */,
 				9B5FDB1C16FC65AB002FA5A6 /* Supporting Files */,
 			);
 			path = PSCCoreDataStack;
@@ -156,7 +161,7 @@
 				9B5FDB3116FC65AC002FA5A6 /* Supporting Files */,
 			);
 			path = PSCCoreDataStackTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		9B5FDB3116FC65AC002FA5A6 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -270,6 +275,7 @@
 				9B5FDB4B16FC65DA002FA5A6 /* PSCContextWatcher.m in Sources */,
 				9B5FDB4C16FC65DA002FA5A6 /* PSCCoreDataStack.m in Sources */,
 				9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */,
+				9B17A9F617025C8300DEF0B9 /* PSCPersistenceOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +435,7 @@
 				9B5FDB3D16FC65AC002FA5A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9B5FDB3E16FC65AC002FA5A6 /* Build configuration list for PBXNativeTarget "PSCCoreDataStackTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +444,7 @@
 				9B5FDB4016FC65AC002FA5A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
