@@ -64,11 +64,13 @@ static NSManagedObjectContext *psc_privateContext = nil;
             NSLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
 
             if (errorBlock != nil) {
-                errorBlock(error);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    errorBlock(error);
+                });
             }
         } else {
             if (successBlock != nil) {
-                successBlock();
+                dispatch_async(dispatch_get_main_queue(),successBlock);
             }
         }
     });
@@ -77,13 +79,13 @@ static NSManagedObjectContext *psc_privateContext = nil;
 + (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
 
-    [[self class] setupWithModelURL:modelURL
-                      storeFileName:storeFileName
-                               type:NSSQLiteStoreType
-                      configuration:nil
-                            options:options
-                            success:successBlock
-                              error:errorBlock];
+    [self setupWithModelURL:modelURL
+              storeFileName:storeFileName
+                       type:NSSQLiteStoreType
+              configuration:nil
+                    options:options
+                    success:successBlock
+                      error:errorBlock];
 }
 
 ////////////////////////////////////////////////////////////////////////
