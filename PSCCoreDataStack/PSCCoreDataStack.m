@@ -28,8 +28,10 @@ static NSManagedObjectContext *psc_privateContext = nil;
                     error:(void(^)(NSError *error))errorBlock {
 
     NSParameterAssert(modelURL != nil);
-    NSParameterAssert(storeFileName != nil);
     NSParameterAssert([storeType isEqualToString:NSSQLiteStoreType] || [storeType isEqualToString:NSBinaryStoreType] || [storeType isEqualToString:NSInMemoryStoreType]);
+    if (![storeType isEqualToString:NSInMemoryStoreType]) {
+        NSParameterAssert(storeFileName != nil);
+    }
 
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSAssert(model != nil, @"Failed to initialize model");
@@ -44,8 +46,12 @@ static NSManagedObjectContext *psc_privateContext = nil;
     psc_mainContext.parentContext = psc_privateContext;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-        storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
+        NSURL *storeURL = nil;
+
+        if (storeFileName != nil) {
+            storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
+            storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
+        }
 
         NSError *error = nil;
         NSPersistentStore *store = [persistentStoreCoordinator addPersistentStoreWithType:storeType
