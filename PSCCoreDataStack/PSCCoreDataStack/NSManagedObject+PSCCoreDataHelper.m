@@ -123,7 +123,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 - (void)reset {
-    if (self.hasChanges) {
+    if (self.hasChanges && self.isInserted) {
         [self.managedObjectContext refreshObject:self mergeChanges:NO];
     }
 }
