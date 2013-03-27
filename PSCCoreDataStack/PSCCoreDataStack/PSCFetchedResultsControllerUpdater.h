@@ -40,6 +40,7 @@
 @interface PSCFetchedResultsControllerUpdater : NSObject <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, readonly) NSUInteger numberOfTotalChanges;
+@property (nonatomic, readonly) NSUInteger numberOfSectionChanges;
 
 @property (nonatomic, readonly) NSIndexSet *deletedSectionIndexes;
 @property (nonatomic, readonly) NSIndexSet *insertedSectionIndexes;
@@ -47,6 +48,7 @@
 @property (nonatomic, readonly) NSArray *deletedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *insertedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *updatedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray *movedObjectIndexPaths;
 
 - (void)reset;
 
