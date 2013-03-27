@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef void(^psc_persistence_block)(NSManagedObjectContext *localContext);
+typedef BOOL(^psc_persistence_block)(NSManagedObjectContext *localContext);
 
 // the queue used in persistDataInBackgroundWithParentContext:block:completion:
 dispatch_queue_t psc_persistence_queue(void);
@@ -33,6 +33,6 @@ dispatch_queue_t psc_persistence_queue(void);
                                 completion:(dispatch_block_t)completion;
 
 /** Subclasses can override to perform a persistence action */
-- (void)persistWithContext:(NSManagedObjectContext *)localContext;
+- (BOOL)persistWithContext:(NSManagedObjectContext *)localContext;
 
 @end

@@ -63,8 +63,9 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
 #pragma mark - PSCPersisteceOperation
 ////////////////////////////////////////////////////////////////////////
 
-- (void)persistWithContext:(NSManagedObjectContext *)localContext {
+- (BOOL)persistWithContext:(NSManagedObjectContext *)localContext {
     // do nothing, subclasses can override
+    return NO;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -74,15 +75,16 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
 - (void)main {
     NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
     NSError *error = nil;
+    BOOL save = NO;
 
     // either persist via block (if set), or call method in subclass
     if (self.persistenceBlock != nil) {
-        self.persistenceBlock(localContext);
+        save = self.persistenceBlock(localContext);
     } else {
-        [self persistWithContext:localContext];
+        save = [self persistWithContext:localContext];
     }
 
-    if (![localContext save:&error]) {
+    if (save && ![localContext save:&error]) {
         NSLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
     }
 }

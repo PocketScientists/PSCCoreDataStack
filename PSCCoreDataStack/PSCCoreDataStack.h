@@ -12,6 +12,7 @@
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
 #import "PSCFetchedResultsControllerUpdater.h"
+#import "PSCPersistenceOperation.h"
 
 
 @interface PSCCoreDataStack : NSObject

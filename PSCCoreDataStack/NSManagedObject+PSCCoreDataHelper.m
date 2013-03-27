@@ -110,6 +110,16 @@
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 
++ (instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
+    NSFetchRequest *fetchRequest = [self requestFirstMatchingPredicate:predicate inContext:context error:error];
+
+    if (fetchRequest != nil) {
+        return [[context executeFetchRequest:fetchRequest error:error] lastObject];
+    } else {
+        return nil;
+    }
+}
+
 + (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
 	NSFetchRequest *request = [self requestAllMatchingPredicate:predicate inContext:context error:error];
 
