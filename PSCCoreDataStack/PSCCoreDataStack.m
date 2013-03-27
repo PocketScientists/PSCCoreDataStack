@@ -28,14 +28,16 @@ static NSManagedObjectContext *psc_privateContext = nil;
                     error:(void(^)(NSError *error))errorBlock {
 
     NSParameterAssert(modelURL != nil);
-    NSParameterAssert(storeFileName != nil);
     NSParameterAssert([storeType isEqualToString:NSSQLiteStoreType] || [storeType isEqualToString:NSBinaryStoreType] || [storeType isEqualToString:NSInMemoryStoreType]);
+    if (![storeType isEqualToString:NSInMemoryStoreType]) {
+        NSParameterAssert(storeFileName != nil);
+    }
 
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    NSAssert(model != nil, @"Failed to initialize model");
+    NSAssert(model != nil, @"Failed to initialize model with URL: %@", modelURL);
 
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    NSAssert(persistentStoreCoordinator != nil, @"Failed to initialize persistent store coordinator");
+    NSAssert(persistentStoreCoordinator != nil, @"Failed to initialize persistent store coordinator with model: %@", model);
 
     psc_privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     psc_privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
@@ -44,8 +46,12 @@ static NSManagedObjectContext *psc_privateContext = nil;
     psc_mainContext.parentContext = psc_privateContext;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-        storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
+        NSURL *storeURL = nil;
+
+        if (storeFileName != nil) {
+            storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
+            storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
+        }
 
         NSError *error = nil;
         NSPersistentStore *store = [persistentStoreCoordinator addPersistentStoreWithType:storeType
@@ -58,11 +64,13 @@ static NSManagedObjectContext *psc_privateContext = nil;
             NSLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
 
             if (errorBlock != nil) {
-                errorBlock(error);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    errorBlock(error);
+                });
             }
         } else {
             if (successBlock != nil) {
-                successBlock();
+                dispatch_async(dispatch_get_main_queue(),successBlock);
             }
         }
     });
@@ -71,13 +79,13 @@ static NSManagedObjectContext *psc_privateContext = nil;
 + (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
 
-    [[self class] setupWithModelURL:modelURL
-                      storeFileName:storeFileName
-                               type:NSSQLiteStoreType
-                      configuration:nil
-                            options:options
-                            success:successBlock
-                              error:errorBlock];
+    [self setupWithModelURL:modelURL
+              storeFileName:storeFileName
+                       type:NSSQLiteStoreType
+              configuration:nil
+                    options:options
+                    success:successBlock
+                      error:errorBlock];
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -103,7 +111,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
     return psc_mainContext;
 }
 
-+ (NSManagedObjectContext *)newChildContext {
++ (NSManagedObjectContext *)newChildContextWithPrivateQueue {
     return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 

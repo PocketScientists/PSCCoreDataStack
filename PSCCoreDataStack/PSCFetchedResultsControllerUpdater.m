@@ -56,7 +56,7 @@
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
     // only implemented for safety, if every delegate method gets forwarded
-    return sectionName;
+    return [[sectionName substringToIndex:1] uppercaseString];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -65,10 +65,12 @@
      forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     if (type == NSFetchedResultsChangeInsert) {
+		// If we've already been told that we're adding a section for this inserted row we skip it since it will handled by the section insertion.
         if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
             [_insertedObjectIndexPaths addObject:newIndexPath];
         }        
     } else if (type == NSFetchedResultsChangeDelete) {
+		// If we've already been told that we're deleting a section for this deleted row we skip it since it will handled by the section deletion.
         if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
             [_deletedObjectIndexPaths addObject:indexPath];
         }
@@ -76,7 +78,9 @@
         if (![_insertedSectionIndexes containsIndex:newIndexPath.section] || ![_deletedSectionIndexes containsIndex:indexPath.section]) {
             [_movedObjectIndexPaths addObject:@[newIndexPath, indexPath]];
         }
-    } else if (type == NSFetchedResultsChangeUpdate) {
+    }
+
+    else if (type == NSFetchedResultsChangeUpdate) {
         [_updatedObjectIndexPaths addObject:indexPath];
     }
 }

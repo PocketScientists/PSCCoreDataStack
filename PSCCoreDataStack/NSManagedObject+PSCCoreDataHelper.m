@@ -49,7 +49,7 @@
     return object;
 }
 
-+ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
++ (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     NSParameterAssert(context != nil);
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
@@ -70,10 +70,12 @@
             [context deleteObject:object];
         }
     }
+
+    return objects.count;
 }
 
-+ (void)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
-    [self deleteAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
++ (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
+    return [self deleteAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
 }
 
 + (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
@@ -106,6 +108,16 @@
 
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
+}
+
++ (instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
+    NSFetchRequest *fetchRequest = [self requestFirstMatchingPredicate:predicate inContext:context error:error];
+
+    if (fetchRequest != nil) {
+        return [[context executeFetchRequest:fetchRequest error:error] lastObject];
+    } else {
+        return nil;
+    }
 }
 
 + (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
