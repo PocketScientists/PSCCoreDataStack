@@ -123,7 +123,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 - (void)reset {
-    if (self.hasChanges && self.isInserted) {
+    if (self.hasChanges && !self.objectID.isTemporaryID) {
         [self.managedObjectContext refreshObject:self mergeChanges:NO];
     }
 }
