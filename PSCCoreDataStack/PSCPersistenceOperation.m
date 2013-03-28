@@ -98,7 +98,7 @@ dispatch_queue_t psc_persistence_queue(void) {
     dispatch_once(&onceToken, ^{
         _psc_persistence_queue = dispatch_queue_create("com.pocketscience.persistence-queue", 0);
     });
-
+    
     return _psc_persistence_queue;
 }
 

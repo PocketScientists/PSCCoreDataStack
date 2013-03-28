@@ -18,7 +18,7 @@
 
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context != nil);
-    
+
     return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
 }
 
@@ -27,7 +27,7 @@
     NSParameterAssert(context != nil);
 
     id object = nil;
-    
+
     if (value != nil) {
         NSError *error = nil;
         NSFetchRequest *request = [self requestFirstMatchingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", attribute, value]
@@ -40,12 +40,12 @@
             object = [[context executeFetchRequest:request error:&error] lastObject];
         }
     }
-    
+
     if (object == nil) {
         object = [[self class] newObjectInContext:context];
         [object setValue:value forKey:attribute];
     }
-    
+
     return object;
 }
 
@@ -62,9 +62,9 @@
     if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
     }
-    
+
     NSArray *objects = [context executeFetchRequest:request error:error];
-    
+
     if (objects.count > 0) {
         for (NSManagedObject *object in objects) {
             [context deleteObject:object];
@@ -100,7 +100,7 @@
     if (requestConfigurationBlock != nil) {
         request = requestConfigurationBlock(request);
     }
-    
+
     NSArray *objects = [context executeFetchRequest:request error:error];
 
     return objects;
@@ -130,6 +130,82 @@
     }
 }
 
++ (BOOL)persistEntityDictionaries:(NSArray *)data
+    deleteEntitiesNotInDictionary:(BOOL)deleteEntitiesNotInDictionary
+            entityKeyInDictionary:(NSString *)dictionaryIDKey
+              entityKeyInDatabase:(NSString *)databaseIDKey
+                          context:(NSManagedObjectContext *)context
+                      updateBlock:(void(^)(id managedObject, NSDictionary *data, NSManagedObjectContext *localContext))updateBlock
+                            error:(NSError **)error {
+
+    NSParameterAssert([data isKindOfClass:[NSArray class]]);
+    NSParameterAssert(dictionaryIDKey != nil);
+    NSParameterAssert(databaseIDKey != nil);
+    NSParameterAssert(context != nil);
+    NSParameterAssert(updateBlock != nil);
+
+    NSArray *entitiesAlreadyInDatabase = nil;
+    NSMutableSet *newEntityIDs = nil;
+
+    // get all IDs of the entities in the dictionary (new data)
+    NSArray *entityIDs = [data valueForKey:dictionaryIDKey] ?: [NSArray array];
+
+
+    // remove all entities that are not in the new data set
+    if (deleteEntitiesNotInDictionary) {
+        [self deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"NOT (%K IN %@)", databaseIDKey, entityIDs]
+                               inContext:context
+                                   error:error];
+        if (*error != nil) {
+            NSLog(@"Error deleting objects with databaseIDKey '%@' that are not contained in the entityIDs: %@", databaseIDKey, entityIDs);
+            return NO;
+        }
+    }
+
+    // retreive all entities with one of these IDs in the database
+    {
+        entitiesAlreadyInDatabase = [self fetchAllMatchingPredicate:[NSPredicate predicateWithFormat:@"%K IN %@", databaseIDKey, entityIDs]
+                                                          inContext:context
+                                                              error:error];
+        if (entitiesAlreadyInDatabase == nil) {
+            NSLog(@"Error fetching objects with databaseIDKey '%@' and entityIDs: %@", databaseIDKey, entityIDs);
+            return NO;
+        }
+    }
+
+    // retreive only the new IDs of the objects that are not yet in the database
+    {
+        newEntityIDs = [NSMutableSet setWithArray:entityIDs];
+        [newEntityIDs minusSet:[NSSet setWithArray:[entitiesAlreadyInDatabase valueForKey:databaseIDKey]]];
+    }
+
+    // update entities that are already present in database
+    for (id entityToUpdate in entitiesAlreadyInDatabase) {
+        // get corresponding data-dictionary for entity to update
+        NSArray *entityToUpdateDictionaries = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@",
+                                                                                 dictionaryIDKey,
+                                                                                 [entityToUpdate valueForKey:databaseIDKey]]];
+        NSDictionary *entityToUpdateDictionary = [entityToUpdateDictionaries lastObject]; // should only be one anyway
+
+        updateBlock(entityToUpdate, entityToUpdateDictionary, context);
+    }
+
+    // insert entities not yet in database
+    for (id newEntityID in newEntityIDs) {
+        // get data-dictionary of new entity to insert
+        NSArray *newEntityDictionaries = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@",
+                                                                            dictionaryIDKey,
+                                                                            newEntityID]];
+        NSDictionary *newEntityDictionary = [newEntityDictionaries lastObject];
+        id newEntity = [self newObjectInContext:context];
+
+        [newEntity setValue:newEntityID forKey:databaseIDKey];
+        updateBlock(newEntity, newEntityDictionary, context);
+    }
+
+    return YES;
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Instance Methods
 ////////////////////////////////////////////////////////////////////////
@@ -150,7 +226,7 @@
             return [[propertyDescription userInfo] valueForKey:key];
         }
     }
-    
+
     return nil;
 }
 
