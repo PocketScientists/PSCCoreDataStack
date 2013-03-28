@@ -135,7 +135,7 @@
             entityKeyInDictionary:(NSString *)dictionaryIDKeyPath
               entityKeyInDatabase:(NSString *)databaseIDKey
                           context:(NSManagedObjectContext *)context
-                      updateBlock:(void(^)(id managedObject, NSDictionary *data, NSManagedObjectContext *localContext))updateBlock
+                      updateBlock:(void(^)(id managedObject, NSDictionary *data))updateBlock
                             error:(NSError **)error {
 
     NSParameterAssert([data isKindOfClass:[NSArray class]]);
@@ -146,6 +146,7 @@
 
     NSArray *entitiesAlreadyInDatabase = nil;
     NSMutableSet *newEntityIDs = nil;
+    NSUInteger deletedObjectsCount = 0, insertedObjectsCount = 0, updatedObjectsCount = 0;
 
     // get all IDs of the entities in the dictionary (new data)
     NSArray *entityIDs = [data valueForKeyPath:dictionaryIDKeyPath] ?: [NSArray array];
@@ -153,9 +154,9 @@
 
     // remove all entities that are not in the new data set
     if (deleteEntitiesNotInDictionary) {
-        [self deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"NOT (%K IN %@)", databaseIDKey, entityIDs]
-                               inContext:context
-                                   error:error];
+        deletedObjectsCount = [self deleteAllMatchingPredicate:[NSPredicate predicateWithFormat:@"NOT (%K IN %@)", databaseIDKey, entityIDs]
+                                                     inContext:context
+                                                         error:error];
         if (*error != nil) {
             NSLog(@"Error deleting objects with databaseIDKey '%@' that are not contained in the entityIDs: %@", databaseIDKey, entityIDs);
             return NO;
@@ -172,12 +173,15 @@
             NSLog(@"Error fetching objects with databaseIDKey '%@' and entityIDs: %@", databaseIDKey, entityIDs);
             return NO;
         }
+
+        updatedObjectsCount = entitiesAlreadyInDatabase.count;
     }
 
     // retreive only the new IDs of the objects that are not yet in the database
     {
         newEntityIDs = [NSMutableSet setWithArray:entityIDs];
         [newEntityIDs minusSet:[NSSet setWithArray:[entitiesAlreadyInDatabase valueForKey:databaseIDKey]]];
+        insertedObjectsCount = newEntityIDs.count;
     }
 
     // update entities that are already present in database
@@ -188,7 +192,7 @@
                                                                                  [entityToUpdate valueForKey:databaseIDKey]]];
         NSDictionary *entityToUpdateDictionary = [entityToUpdateDictionaries lastObject]; // should only be one anyway
 
-        updateBlock(entityToUpdate, entityToUpdateDictionary, context);
+        updateBlock(entityToUpdate, entityToUpdateDictionary);
     }
 
     // insert entities not yet in database
@@ -201,8 +205,10 @@
         id newEntity = [self newObjectInContext:context];
 
         [newEntity setValue:newEntityID forKey:databaseIDKey];
-        updateBlock(newEntity, newEntityDictionary, context);
+        updateBlock(newEntity, newEntityDictionary);
     }
+
+    NSLog(@"[%@] - deleted: %d, updated: %d, inserted:%d", NSStringFromClass([self class]), deletedObjectsCount, updatedObjectsCount, insertedObjectsCount);
 
     return YES;
 }
@@ -227,7 +233,7 @@
             return [[propertyDescription userInfo] valueForKey:key];
         }
     }
-
+    
     return nil;
 }
 

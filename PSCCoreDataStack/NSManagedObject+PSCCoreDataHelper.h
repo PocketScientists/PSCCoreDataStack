@@ -52,8 +52,8 @@
     deleteEntitiesNotInDictionary:(BOOL)deleteEntitiesNotInDictionary
             entityKeyInDictionary:(NSString *)dictionaryIDKeyPath
               entityKeyInDatabase:(NSString *)databaseIDKey
-                          context:(NSManagedObjectContext *)context
-                      updateBlock:(void(^)(id managedObject, NSDictionary *data, NSManagedObjectContext *localContext))updateBlock
+                          context:(NSManagedObjectContext *)contex
+                      updateBlock:(void(^)(id managedObject, NSDictionary *data))updateBlock
                             error:(NSError **)error;
 
 - (void)reset;
