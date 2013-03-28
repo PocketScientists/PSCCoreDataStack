@@ -40,7 +40,7 @@
 
  @param data an array of NSDictionaries to persist
  @param deleteEntitiesNotInDictionary if YES entities which IDs are not present in the dictionaries get deleted from the context
- @param dictionaryIDKey the name of the key that uniquely identifies a record in the dictionary
+ @param dictionaryIDKeyPath the key path to the value that uniquely identifies a record in the dictionary
  @param databaseIDKey the name of the key thhat uniquely identifies a record in Core Data
  @param context the managed object context to perform the operations on
  @param updateBlock the block that gets executed for each pair of managed object / dictionary that match up.
@@ -50,7 +50,7 @@
  */
 + (BOOL)persistEntityDictionaries:(NSArray *)data
     deleteEntitiesNotInDictionary:(BOOL)deleteEntitiesNotInDictionary
-            entityKeyInDictionary:(NSString *)dictionaryIDKey
+            entityKeyInDictionary:(NSString *)dictionaryIDKeyPath
               entityKeyInDatabase:(NSString *)databaseIDKey
                           context:(NSManagedObjectContext *)context
                       updateBlock:(void(^)(id managedObject, NSDictionary *data, NSManagedObjectContext *localContext))updateBlock

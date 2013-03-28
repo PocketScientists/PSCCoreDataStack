@@ -132,14 +132,14 @@
 
 + (BOOL)persistEntityDictionaries:(NSArray *)data
     deleteEntitiesNotInDictionary:(BOOL)deleteEntitiesNotInDictionary
-            entityKeyInDictionary:(NSString *)dictionaryIDKey
+            entityKeyInDictionary:(NSString *)dictionaryIDKeyPath
               entityKeyInDatabase:(NSString *)databaseIDKey
                           context:(NSManagedObjectContext *)context
                       updateBlock:(void(^)(id managedObject, NSDictionary *data, NSManagedObjectContext *localContext))updateBlock
                             error:(NSError **)error {
 
     NSParameterAssert([data isKindOfClass:[NSArray class]]);
-    NSParameterAssert(dictionaryIDKey != nil);
+    NSParameterAssert(dictionaryIDKeyPath != nil);
     NSParameterAssert(databaseIDKey != nil);
     NSParameterAssert(context != nil);
     NSParameterAssert(updateBlock != nil);
@@ -148,7 +148,7 @@
     NSMutableSet *newEntityIDs = nil;
 
     // get all IDs of the entities in the dictionary (new data)
-    NSArray *entityIDs = [data valueForKey:dictionaryIDKey] ?: [NSArray array];
+    NSArray *entityIDs = [data valueForKeyPath:dictionaryIDKeyPath] ?: [NSArray array];
 
 
     // remove all entities that are not in the new data set
@@ -164,7 +164,8 @@
 
     // retreive all entities with one of these IDs in the database
     {
-        entitiesAlreadyInDatabase = [self fetchAllMatchingPredicate:[NSPredicate predicateWithFormat:@"%K IN %@", databaseIDKey, entityIDs]
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K IN %@", databaseIDKey, entityIDs];
+        entitiesAlreadyInDatabase = [self fetchAllMatchingPredicate:predicate
                                                           inContext:context
                                                               error:error];
         if (entitiesAlreadyInDatabase == nil) {
@@ -183,7 +184,7 @@
     for (id entityToUpdate in entitiesAlreadyInDatabase) {
         // get corresponding data-dictionary for entity to update
         NSArray *entityToUpdateDictionaries = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@",
-                                                                                 dictionaryIDKey,
+                                                                                 dictionaryIDKeyPath,
                                                                                  [entityToUpdate valueForKey:databaseIDKey]]];
         NSDictionary *entityToUpdateDictionary = [entityToUpdateDictionaries lastObject]; // should only be one anyway
 
@@ -194,9 +195,9 @@
     for (id newEntityID in newEntityIDs) {
         // get data-dictionary of new entity to insert
         NSArray *newEntityDictionaries = [data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@",
-                                                                            dictionaryIDKey,
+                                                                            dictionaryIDKeyPath,
                                                                             newEntityID]];
-        NSDictionary *newEntityDictionary = [newEntityDictionaries lastObject];
+        NSDictionary *newEntityDictionary = [newEntityDictionaries lastObject]; // should only be one anyway
         id newEntity = [self newObjectInContext:context];
 
         [newEntity setValue:newEntityID forKey:databaseIDKey];
