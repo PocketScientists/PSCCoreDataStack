@@ -126,7 +126,7 @@
     if (request != nil) {
         return [context countForFetchRequest:request error:error];
     } else {
-        return NSNotFound;
+        return 0;
     }
 }
 
