@@ -227,6 +227,15 @@
     [self.managedObjectContext deleteObject:self];
 }
 
+- (NSManagedObjectID *)permanentObjectID {
+	if ([self.objectID isTemporaryID]) {
+		[self.managedObjectContext obtainPermanentIDsForObjects:@[self] error:nil];
+	}
+    
+	return [self objectID];
+}
+
+
 - (id)userInfoValueForKey:(NSString *)key ofProperty:(NSString *)property {
     for (NSPropertyDescription *propertyDescription in self.entity.properties) {
         if ([propertyDescription.name isEqualToString:property]) {

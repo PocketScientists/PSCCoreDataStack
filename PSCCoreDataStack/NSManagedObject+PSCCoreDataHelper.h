@@ -12,6 +12,8 @@
 
 @interface NSManagedObject (PSCCoreDataHelper)
 
+@property (nonatomic, readonly) NSManagedObjectID *permanentObjectID;
+
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context;
 + (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context;
 
