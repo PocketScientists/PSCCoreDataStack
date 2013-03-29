@@ -10,6 +10,9 @@
 @class PSCContextWatcher;
 
 
+typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
+
+
 @interface NSManagedObject (PSCCoreDataHelper)
 
 @property (nonatomic, readonly) NSManagedObjectID *permanentObjectID;
@@ -18,16 +21,16 @@
 + (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context;
 
 + (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate
-                    requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock
+                    requestConfiguration:(psc_request_block)requestConfigurationBlock
                                inContext:(NSManagedObjectContext *)context
                                    error:(NSError **)error;
 + (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 
-+ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
-+ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
++ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
++ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
 
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate
-                  requestConfiguration:(NSFetchRequest *(^)(NSFetchRequest *request))requestConfigurationBlock
+                  requestConfiguration:(psc_request_block)requestConfigurationBlock
                              inContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error;
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
