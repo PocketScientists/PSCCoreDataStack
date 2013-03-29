@@ -19,25 +19,27 @@
 }
 
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
+    __block BOOL success = NO;
+
     if (self.hasChanges) {
         if (self.concurrencyType == NSConfinementConcurrencyType) {
-            [self save:error];
+            success = [self save:error];
         } else {
             [self performBlockAndWait:^{
-                [self save:error];
+                success = [self save:error];
             }];
         }
     }
     
-    if (*error != nil || self.parentContext == nil) {
+    if (!success) {
         return;
     }
     
-    void (^saveParent)(void) = ^{
-        [self.parentContext save:error];
-    };
-    
     if (self.parentContext.hasChanges) {
+        dispatch_block_t saveParent = ^{
+            [self.parentContext save:error];
+        };
+        
         if (self.parentContext.concurrencyType == NSConfinementConcurrencyType) {
             saveParent();
         } else if (wait) {
