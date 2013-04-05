@@ -110,19 +110,7 @@
         return;
     }
     
-    NSMutableDictionary *results = [NSMutableDictionary dictionary];
-
-    if (inserted != nil) {
-        [results setObject:inserted forKey:NSInsertedObjectsKey];
-    }
-    if (deleted != nil) {
-        [results setObject:deleted forKey:NSDeletedObjectsKey];
-    }
-    if (updated != nil) {
-        [results setObject:updated forKey:NSUpdatedObjectsKey];
-    }
-    
-    [self.delegate contextWatcher:self observedChanges:results inContext:self.contextToWatch];
+    [self.delegate contextWatcher:self observedInsertions:inserted deletions:deleted updates:updated inContext:self.contextToWatch];
 }
 
 @end

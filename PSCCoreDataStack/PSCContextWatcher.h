@@ -51,7 +51,10 @@
 
 @protocol PSCContextWatcherDelegate <NSObject>
 
-@required
-- (void)contextWatcher:(PSCContextWatcher *)watcher observedChanges:(NSDictionary *)changes inContext:(NSManagedObjectContext *)context;
+- (void)contextWatcher:(PSCContextWatcher *)watcher
+    observedInsertions:(NSSet *)inserts
+             deletions:(NSSet *)deletions
+               updates:(NSSet *)updates
+             inContext:(NSManagedObjectContext *)context;
 
 @end
