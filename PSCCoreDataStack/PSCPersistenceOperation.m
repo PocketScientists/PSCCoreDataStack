@@ -1,6 +1,7 @@
 #import "PSCPersistenceOperation.h"
 #import "PSCCoreDataStack.h"
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
+#import "PSCLogging.h"
 
 
 static dispatch_queue_t _psc_persistence_queue = NULL;
@@ -50,7 +51,7 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
         }
 
         if (![localContext save:&error]) {
-            NSLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+            PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
         }
 
         if (completion != nil) {
@@ -85,7 +86,7 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
     }
 
     if (save && ![localContext save:&error]) {
-        NSLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+        PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
     }
 }
 

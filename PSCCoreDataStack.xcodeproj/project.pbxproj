@@ -69,6 +69,7 @@
 		9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCFetchedResultsControllerUpdater.h; sourceTree = "<group>"; };
 		9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCFetchedResultsControllerUpdater.m; sourceTree = "<group>"; };
 		9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9B6B3C56170F5496004DFAD7 /* PSCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSCLogging.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +142,7 @@
 				9B17A9F417025C8300DEF0B9 /* PSCPersistenceOperation.h */,
 				9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */,
 				9B5FDB1C16FC65AB002FA5A6 /* Supporting Files */,
+				9B6B3C56170F5496004DFAD7 /* PSCLogging.h */,
 			);
 			path = PSCCoreDataStack;
 			sourceTree = "<group>";

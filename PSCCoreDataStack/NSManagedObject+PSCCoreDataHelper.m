@@ -8,6 +8,7 @@
 
 #import "NSManagedObject+PSCCoreDataHelper.h"
 #import "PSCContextWatcher.h"
+#import "PSCLogging.h"
 
 
 @implementation NSManagedObject (PSCCoreDataHelper)
@@ -34,7 +35,7 @@
                                                                 error:&error];
 
         if (request == nil) {
-            NSLog(@"Error fetching first object: %@ - %@", [error localizedDescription], [error userInfo]);
+            PSCCDLog(@"Error fetching first object: %@ - %@", [error localizedDescription], [error userInfo]);
         } else {
             object = [[context executeFetchRequest:request error:&error] lastObject];
         }
@@ -156,7 +157,7 @@
                                                      inContext:context
                                                          error:error];
         if (*error != nil) {
-            NSLog(@"Error deleting objects with databaseIDKey '%@' that are not contained in the entityIDs: %@", databaseIDKey, entityIDs);
+            PSCCDLog(@"Error deleting objects with databaseIDKey '%@' that are not contained in the entityIDs: %@", databaseIDKey, entityIDs);
             return NO;
         }
     }
@@ -168,7 +169,7 @@
                                                           inContext:context
                                                               error:error];
         if (entitiesAlreadyInDatabase == nil) {
-            NSLog(@"Error fetching objects with databaseIDKey '%@' and entityIDs: %@", databaseIDKey, entityIDs);
+            PSCCDLog(@"Error fetching objects with databaseIDKey '%@' and entityIDs: %@", databaseIDKey, entityIDs);
             return NO;
         }
 
@@ -206,7 +207,7 @@
         updateBlock(newEntity, newEntityDictionary);
     }
 
-    NSLog(@"[%@] - deleted: %d, updated: %d, inserted:%d", NSStringFromClass([self class]), deletedObjectsCount, updatedObjectsCount, insertedObjectsCount);
+    PSCCDLog(@"[%@] - deleted: %d, updated: %d, inserted:%d", NSStringFromClass([self class]), deletedObjectsCount, updatedObjectsCount, insertedObjectsCount);
 
     return YES;
 }
@@ -227,7 +228,10 @@
 
 - (NSManagedObjectID *)permanentObjectID {
 	if ([self.objectID isTemporaryID]) {
-		[self.managedObjectContext obtainPermanentIDsForObjects:@[self] error:nil];
+        NSError *error = nil;
+		if (![self.managedObjectContext obtainPermanentIDsForObjects:@[self] error:&error]) {
+            PSCCDLog(@"Error obtaining permanent object id: %@", error);
+        }
 	}
     
 	return [self objectID];
