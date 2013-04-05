@@ -22,12 +22,12 @@
         } else {
             [self.tableView beginUpdates];
 
-            [self.tableView deleteSections:self.deletedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertSections:self.insertedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteSections:self.updater.deletedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertSections:self.updater.insertedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
 
-            [self.tableView deleteRowsAtIndexPaths:self.deletedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertRowsAtIndexPaths:self.insertedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView reloadRowsAtIndexPaths:self.updatedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:self.updater.deletedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:self.updater.insertedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadRowsAtIndexPaths:self.updater.updatedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 
             [self.tableView endUpdates];
         }
