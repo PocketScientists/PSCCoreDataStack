@@ -9,12 +9,29 @@
 #import "PSCFetchedResultsControllerUpdater.h"
 
 
+@implementation PSCFetchedResultsControllerMove
+@end
+
+
 @implementation PSCFetchedResultsControllerUpdater {
     NSMutableIndexSet *_insertedSectionIndexes;
     NSMutableIndexSet *_deletedSectionIndexes;
     NSMutableArray *_deletedObjectIndexPaths;
     NSMutableArray *_insertedObjectIndexPaths;
     NSMutableArray *_updatedObjectIndexPaths;
+    NSMutableArray *_movedObjectIndexPaths;
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Lifecycle
+////////////////////////////////////////////////////////////////////////
+
+- (id)init {
+    if ((self = [super init])) {
+        _reportMovesAsInsertionsAndDeletions = YES;
+    }
+
+    return self;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -24,16 +41,17 @@
 - (void)reset {
     _insertedSectionIndexes = [[NSMutableIndexSet alloc] init];
     _deletedSectionIndexes = [[NSMutableIndexSet alloc] init];
-    
+
     _deletedObjectIndexPaths = [[NSMutableArray alloc] init];
     _insertedObjectIndexPaths = [[NSMutableArray alloc] init];
     _updatedObjectIndexPaths = [[NSMutableArray alloc] init];
+    _movedObjectIndexPaths = [[NSMutableArray alloc] init];
 }
 
 - (NSUInteger)numberOfTotalChanges {
     return ([self.deletedSectionIndexes count] + [self.insertedSectionIndexes count] +
             [self.deletedObjectIndexPaths count] + [self.insertedObjectIndexPaths count] +
-            [self.updatedObjectIndexPaths count]);
+            [self.updatedObjectIndexPaths count] + [self.movedObjectIndexPaths count]*2);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -73,12 +91,21 @@
     }
 
     else if (type == NSFetchedResultsChangeMove) {
-        if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
-            [_insertedObjectIndexPaths addObject:newIndexPath];
-        }
+        if (self.reportMovesAsInsertionsAndDeletions) {
+            if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
+                [_insertedObjectIndexPaths addObject:newIndexPath];
+            }
 
-        if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
-            [_deletedObjectIndexPaths addObject:indexPath];
+            if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
+                [_deletedObjectIndexPaths addObject:indexPath];
+            }
+        } else {
+            // TODO: do we need to check the inserted/deleted sections here as well?
+            PSCFetchedResultsControllerMove *move = [PSCFetchedResultsControllerMove new];
+
+            move.fromIndexPath = indexPath;
+            move.toIndexPath = newIndexPath;
+            [_movedObjectIndexPaths addObject:move];
         }
     }
 

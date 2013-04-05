@@ -39,6 +39,7 @@
  */
 @interface PSCFetchedResultsControllerUpdater : NSObject <NSFetchedResultsControllerDelegate>
 
+@property (nonatomic, assign) BOOL reportMovesAsInsertionsAndDeletions; // defaults to YES
 @property (nonatomic, readonly) NSUInteger numberOfTotalChanges;
 
 @property (nonatomic, readonly) NSIndexSet *deletedSectionIndexes;
@@ -47,7 +48,16 @@
 @property (nonatomic, readonly) NSArray *deletedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *insertedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *updatedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray *movedObjectIndexPaths; // only set if reportMovesAsInsertionsAndDeletions is NO
 
 - (void)reset;
+
+@end
+
+
+@interface PSCFetchedResultsControllerMove : NSObject
+
+@property (nonatomic, strong) NSIndexPath *fromIndexPath;
+@property (nonatomic, strong) NSIndexPath *toIndexPath;
 
 @end
