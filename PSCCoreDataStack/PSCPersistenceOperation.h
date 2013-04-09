@@ -36,5 +36,6 @@ dispatch_queue_t psc_persistence_queue(void);
 - (BOOL)persistWithContext:(NSManagedObjectContext *)localContext;
 - (void)willSaveContext:(NSManagedObjectContext *)localContext;
 - (void)didSaveContext:(NSManagedObjectContext *)localContext;
+- (void)didFailToSaveContext:(NSManagedObjectContext *)localContext error:(NSError *)error;
 
 @end
