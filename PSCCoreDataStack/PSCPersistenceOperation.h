@@ -34,5 +34,7 @@ dispatch_queue_t psc_persistence_queue(void);
 
 /** Subclasses can override to perform a persistence action */
 - (BOOL)persistWithContext:(NSManagedObjectContext *)localContext;
+- (void)willSaveContext:(NSManagedObjectContext *)localContext;
+- (void)didSaveContext:(NSManagedObjectContext *)localContext;
 
 @end

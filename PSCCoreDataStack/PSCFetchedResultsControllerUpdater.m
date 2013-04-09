@@ -10,6 +10,11 @@
 
 
 @implementation PSCFetchedResultsControllerMove
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"From: %@ - to: %@", self.fromIndexPath, self.toIndexPath];
+}
+
 @end
 
 

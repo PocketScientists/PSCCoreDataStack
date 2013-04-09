@@ -69,13 +69,20 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
     return NO;
 }
 
+- (void)willSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
+- (void)didSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - NSOperation
 ////////////////////////////////////////////////////////////////////////
 
 - (void)main {
     NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
-    NSError *error = nil;
     BOOL save = NO;
 
     // either persist via block (if set), or call method in subclass
@@ -85,8 +92,16 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
         save = [self persistWithContext:localContext];
     }
 
-    if (save && ![localContext save:&error]) {
-        PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+    if (save && localContext.hasChanges) {
+        NSError *error = nil;
+        
+        [self willSaveContext:localContext];
+
+        if (![localContext save:&error]) {
+            PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+        } else {
+            [self didSaveContext:localContext];
+        }
     }
 }
 
