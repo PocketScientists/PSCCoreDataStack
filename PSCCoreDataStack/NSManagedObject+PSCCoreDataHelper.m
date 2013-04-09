@@ -144,7 +144,7 @@
     NSParameterAssert(updateBlock != nil);
 
     NSArray *entitiesAlreadyInDatabase = nil;
-    NSMutableSet *newEntityIDs = nil;
+    NSMutableArray *newEntityIDs = nil;
     NSUInteger deletedObjectsCount = 0, insertedObjectsCount = 0, updatedObjectsCount = 0;
 
     // get all IDs of the entities in the dictionary (new data)
@@ -178,8 +178,9 @@
 
     // retreive only the new IDs of the objects that are not yet in the database
     {
-        newEntityIDs = [NSMutableSet setWithArray:entityIDs];
-        [newEntityIDs minusSet:[NSSet setWithArray:[entitiesAlreadyInDatabase valueForKey:databaseIDKey]]];
+        newEntityIDs = [entityIDs mutableCopy];
+        [newEntityIDs removeObjectsInArray:[entitiesAlreadyInDatabase valueForKey:databaseIDKey]];
+
         insertedObjectsCount = newEntityIDs.count;
     }
 
