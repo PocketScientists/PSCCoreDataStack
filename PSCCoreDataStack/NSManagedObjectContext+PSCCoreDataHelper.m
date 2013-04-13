@@ -18,7 +18,7 @@
     return childContext;
 }
 
-- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
+- (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
     __block BOOL success = NO;
 
     if (self.hasChanges) {
@@ -32,12 +32,12 @@
     }
     
     if (!success) {
-        return;
+        return NO;
     }
     
     if (self.parentContext.hasChanges) {
         dispatch_block_t saveParent = ^{
-            [self.parentContext save:error];
+            success = [self.parentContext save:error];
         };
         
         if (self.parentContext.concurrencyType == NSConfinementConcurrencyType) {
@@ -48,10 +48,12 @@
             [self.parentContext performBlock:saveParent];
         }
     }
+
+    return success;
 }
 
-- (void)saveAndPropagateToParentContext:(__autoreleasing NSError **)error {
-    [self saveAndPropagateToParentContextBlocking:NO error:error];
+- (BOOL)saveAndPropagateToParentContext:(__autoreleasing NSError **)error {
+    return [self saveAndPropagateToParentContextBlocking:NO error:error];
 }
 
 @end
