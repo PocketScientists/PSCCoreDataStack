@@ -81,6 +81,10 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
     PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
 }
 
+- (void)didNotSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - NSOperation
 ////////////////////////////////////////////////////////////////////////
@@ -106,6 +110,8 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
         } else {
             [self didSaveContext:localContext];
         }
+    } else {
+        [self didNotSaveContext:localContext];
     }
 }
 
