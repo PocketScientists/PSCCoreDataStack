@@ -42,7 +42,7 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
     NSParameterAssert(block != nil);
 
     dispatch_async(psc_persistence_queue(), ^{
-        NSManagedObjectContext *localContext = [parentContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
+        NSManagedObjectContext *localContext = [parentContext newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
         NSError *error = nil;
 
         if (block != nil) {
