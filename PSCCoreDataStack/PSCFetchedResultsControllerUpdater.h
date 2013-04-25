@@ -41,6 +41,7 @@
 
 @property (nonatomic, readonly) NSUInteger numberOfTotalChanges;
 @property (nonatomic, readonly) NSUInteger numberOfSectionChanges;
+@property (nonatomic, readonly) NSUInteger numberOfObjectChanges;
 
 @property (nonatomic, readonly) NSIndexSet *deletedSectionIndexes;
 @property (nonatomic, readonly) NSIndexSet *insertedSectionIndexes;
@@ -51,5 +52,7 @@
 @property (nonatomic, readonly) NSArray *movedObjectIndexPaths;
 
 - (void)reset;
+- (void)resetSectionChanges;
+- (void)resetObjectChanges;
 
 @end

@@ -23,9 +23,16 @@
 ////////////////////////////////////////////////////////////////////////
 
 - (void)reset {
+    [self resetSectionChanges];
+    [self resetObjectChanges];
+}
+
+- (void)resetSectionChanges {
     _insertedSectionIndexes = [[NSMutableIndexSet alloc] init];
     _deletedSectionIndexes = [[NSMutableIndexSet alloc] init];
-    
+}
+
+- (void)resetObjectChanges {
     _deletedObjectIndexPaths = [[NSMutableArray alloc] init];
     _insertedObjectIndexPaths = [[NSMutableArray alloc] init];
     _updatedObjectIndexPaths = [[NSMutableArray alloc] init];
@@ -33,13 +40,16 @@
 }
 
 - (NSUInteger)numberOfTotalChanges {
-    return ([self.deletedSectionIndexes count] + [self.insertedSectionIndexes count] +
-            [self.deletedObjectIndexPaths count] + [self.insertedObjectIndexPaths count] +
-            [self.updatedObjectIndexPaths count] + [self.movedObjectIndexPaths count]);
+    return (self.numberOfSectionChanges + self.numberOfObjectChanges);
 }
 
 - (NSUInteger)numberOfSectionChanges {
     return ([self.deletedSectionIndexes count] + [self.insertedSectionIndexes count]);
+}
+
+- (NSUInteger)numberOfObjectChanges {
+    return ([self.deletedObjectIndexPaths count] + [self.insertedObjectIndexPaths count] +
+            [self.updatedObjectIndexPaths count] + [self.movedObjectIndexPaths count]);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -68,7 +78,7 @@
 		// If we've already been told that we're adding a section for this inserted row we skip it since it will handled by the section insertion.
         if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
             [_insertedObjectIndexPaths addObject:newIndexPath];
-        }        
+        }
     } else if (type == NSFetchedResultsChangeDelete) {
 		// If we've already been told that we're deleting a section for this deleted row we skip it since it will handled by the section deletion.
         if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
