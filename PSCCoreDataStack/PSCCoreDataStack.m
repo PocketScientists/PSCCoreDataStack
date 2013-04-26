@@ -7,6 +7,7 @@
 //
 
 #import "PSCCoreDataStack.h"
+#import "PSCLogging.h"
 
 
 static NSManagedObjectContext *psc_mainContext = nil;
@@ -61,7 +62,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
                                                                                     error:&error];
 
         if (store == nil) {
-            NSLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
+            PSCCDLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
 
             if (errorBlock != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{

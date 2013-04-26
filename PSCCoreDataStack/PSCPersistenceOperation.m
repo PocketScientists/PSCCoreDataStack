@@ -1,6 +1,7 @@
 #import "PSCPersistenceOperation.h"
 #import "PSCCoreDataStack.h"
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
+#import "PSCLogging.h"
 
 
 static dispatch_queue_t _psc_persistence_queue = NULL;
@@ -50,7 +51,7 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
         }
 
         if (![localContext save:&error]) {
-            NSLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+            PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
         }
 
         if (completion != nil) {
@@ -68,13 +69,28 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
     return NO;
 }
 
+- (void)willSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
+- (void)didSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
+- (void)didFailToSaveContext:(NSManagedObjectContext *)localContext error:(NSError *)error {
+    PSCCDLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+}
+
+- (void)didNotSaveContext:(NSManagedObjectContext *)localContext {
+    // do nothing, subclasses can override
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - NSOperation
 ////////////////////////////////////////////////////////////////////////
 
 - (void)main {
     NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
-    NSError *error = nil;
     BOOL save = NO;
 
     // either persist via block (if set), or call method in subclass
@@ -84,8 +100,18 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
         save = [self persistWithContext:localContext];
     }
 
-    if (save && ![localContext save:&error]) {
-        NSLog(@"Error persisting local context in PSCPersistenceAction: %@", error);
+    if (save && localContext.hasChanges) {
+        NSError *error = nil;
+        
+        [self willSaveContext:localContext];
+
+        if (![localContext save:&error]) {
+            [self didFailToSaveContext:localContext error:error];
+        } else {
+            [self didSaveContext:localContext];
+        }
+    } else {
+        [self didNotSaveContext:localContext];
     }
 }
 
@@ -98,9 +124,8 @@ dispatch_queue_t psc_persistence_queue(void) {
     dispatch_once(&onceToken, ^{
         _psc_persistence_queue = dispatch_queue_create("com.pocketscience.persistence-queue", 0);
     });
-
+    
     return _psc_persistence_queue;
 }
-
 
 @end

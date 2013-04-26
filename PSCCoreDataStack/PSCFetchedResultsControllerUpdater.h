@@ -22,12 +22,12 @@
         } else {
             [self.tableView beginUpdates];
 
-            [self.tableView deleteSections:self.deletedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertSections:self.insertedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteSections:self.updater.deletedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertSections:self.updater.insertedSectionIndexes withRowAnimation:UITableViewRowAnimationAutomatic];
 
-            [self.tableView deleteRowsAtIndexPaths:self.deletedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView insertRowsAtIndexPaths:self.insertedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView reloadRowsAtIndexPaths:self.updatedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:self.updater.deletedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:self.updater.insertedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadRowsAtIndexPaths:self.updater.updatedObjectIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 
             [self.tableView endUpdates];
         }
@@ -39,6 +39,7 @@
  */
 @interface PSCFetchedResultsControllerUpdater : NSObject <NSFetchedResultsControllerDelegate>
 
+@property (nonatomic, assign) BOOL reportMovesAsInsertionsAndDeletions; // defaults to YES
 @property (nonatomic, readonly) NSUInteger numberOfTotalChanges;
 @property (nonatomic, readonly) NSUInteger numberOfSectionChanges;
 @property (nonatomic, readonly) NSUInteger numberOfObjectChanges;
@@ -49,10 +50,18 @@
 @property (nonatomic, readonly) NSArray *deletedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *insertedObjectIndexPaths;
 @property (nonatomic, readonly) NSArray *updatedObjectIndexPaths;
-@property (nonatomic, readonly) NSArray *movedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray *movedObjectIndexPaths; // only set if reportMovesAsInsertionsAndDeletions is NO
 
 - (void)reset;
 - (void)resetSectionChanges;
 - (void)resetObjectChanges;
+
+@end
+
+
+@interface PSCFetchedResultsControllerMove : NSObject
+
+@property (nonatomic, strong) NSIndexPath *fromIndexPath;
+@property (nonatomic, strong) NSIndexPath *toIndexPath;
 
 @end

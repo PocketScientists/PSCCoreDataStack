@@ -9,6 +9,15 @@
 #import "PSCFetchedResultsControllerUpdater.h"
 
 
+@implementation PSCFetchedResultsControllerMove
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"From: %@ - to: %@", self.fromIndexPath, self.toIndexPath];
+}
+
+@end
+
+
 @implementation PSCFetchedResultsControllerUpdater {
     NSMutableIndexSet *_insertedSectionIndexes;
     NSMutableIndexSet *_deletedSectionIndexes;
@@ -16,6 +25,18 @@
     NSMutableArray *_insertedObjectIndexPaths;
     NSMutableArray *_updatedObjectIndexPaths;
     NSMutableArray *_movedObjectIndexPaths;
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Lifecycle
+////////////////////////////////////////////////////////////////////////
+
+- (id)init {
+    if ((self = [super init])) {
+        _reportMovesAsInsertionsAndDeletions = YES;
+    }
+
+    return self;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -84,9 +105,24 @@
         if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
             [_deletedObjectIndexPaths addObject:indexPath];
         }
-    } else if (type == NSFetchedResultsChangeMove) {
-        if (![_insertedSectionIndexes containsIndex:newIndexPath.section] || ![_deletedSectionIndexes containsIndex:indexPath.section]) {
-            [_movedObjectIndexPaths addObject:@[newIndexPath, indexPath]];
+    }
+
+    else if (type == NSFetchedResultsChangeMove) {
+        if (self.reportMovesAsInsertionsAndDeletions) {
+            if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
+                [_insertedObjectIndexPaths addObject:newIndexPath];
+            }
+
+            if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
+                [_deletedObjectIndexPaths addObject:indexPath];
+            }
+        } else {
+            // TODO: do we need to check the inserted/deleted sections here as well?
+            PSCFetchedResultsControllerMove *move = [PSCFetchedResultsControllerMove new];
+
+            move.fromIndexPath = indexPath;
+            move.toIndexPath = newIndexPath;
+            [_movedObjectIndexPaths addObject:move];
         }
     }
 
