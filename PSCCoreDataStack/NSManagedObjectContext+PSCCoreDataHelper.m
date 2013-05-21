@@ -19,7 +19,7 @@
 }
 
 - (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
-    __block BOOL success = NO;
+    __block BOOL success = YES;
 
     if (self.hasChanges) {
         if (self.concurrencyType == NSConfinementConcurrencyType) {
