@@ -32,6 +32,9 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
 + (void)saveAndPersistContext;
 
++ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock;
++ (void)saveAndPersistContextWithSuccess:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock;
+
 + (NSManagedObjectContext *)mainContext;
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue;
 
