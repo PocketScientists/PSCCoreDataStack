@@ -90,7 +90,7 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
 ////////////////////////////////////////////////////////////////////////
 
 - (void)main {
-    NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSConfinementConcurrencyType];
+    NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
     BOOL save = NO;
 
     // either persist via block (if set), or call method in subclass
