@@ -19,6 +19,7 @@
 
 + (void)setupWithModelURL:(NSURL *)modelURL
             storeFileName:(NSString *)storeFileName
+                     searchPathDirectory:(NSSearchPathDirectory)searchPathDirectory
                      type:(NSString *)storeType
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
@@ -27,6 +28,7 @@
 
 + (void)setupWithModelURL:(NSURL *)modelURL
 autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
+                     searchPathDirectory:(NSSearchPathDirectory)searchPathDirectory
                   success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
