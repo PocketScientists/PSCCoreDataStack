@@ -94,9 +94,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
 ////////////////////////////////////////////////////////////////////////
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait {
-    [[self mainContext] saveAndPropagateToParentContextBlocking:wait success:nil failure:^(NSError *error) {
-        NSAssert(error == nil, @"Error saving context %@ %@\n%@", psc_mainContext, [error localizedDescription], [error userInfo]);
-    }];
+    [[self mainContext] saveAndPropagateToParentContextBlocking:wait success:nil failure:nil];
 }
 
 + (void)saveAndPersistContext {
