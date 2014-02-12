@@ -22,7 +22,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
 
 + (void)setupWithModelURL:(NSURL *)modelURL
             storeFileName:(NSString *)storeFileName
-         storeFilePathURL:(NSURL *)storeFilePathURL
+      searchPathDirectory:(NSSearchPathDirectory)searchPathDirectory
                      type:(NSString *)storeType
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
@@ -51,14 +51,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
         NSURL *storeURL = nil;
         
         if (storeFileName != nil) {
-            
-            if (storeFilePathURL == nil) {
-                storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-            }
-            else {
-                storeURL = storeFilePathURL;
-            }
-            
+            storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
             storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
         }
         
@@ -85,12 +78,12 @@ static NSManagedObjectContext *psc_privateContext = nil;
     });
 }
 
-+ (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName storeFilePathURL:(NSURL *)storeFilePathURL success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
++ (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName searchPathDirectory:(NSSearchPathDirectory)searchPathDirectory success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
     
     [self setupWithModelURL:modelURL
               storeFileName:storeFileName
-           storeFilePathURL:(NSURL *)storeFilePathURL
+        searchPathDirectory:(NSSearchPathDirectory)searchPathDirectory
                        type:NSSQLiteStoreType
               configuration:nil
                     options:options
