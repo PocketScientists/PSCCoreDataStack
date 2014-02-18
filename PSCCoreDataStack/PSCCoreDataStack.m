@@ -23,47 +23,51 @@ static NSManagedObjectContext *psc_privateContext = nil;
 + (void)setupWithModelURL:(NSURL *)modelURL
             storeFileName:(NSString *)storeFileName
                      type:(NSString *)storeType
+                 storeURL:(NSURL *)storeURL
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
                   success:(void(^)())successBlock
                     error:(void(^)(NSError *error))errorBlock {
-
+    
     NSParameterAssert(modelURL != nil);
     NSParameterAssert([storeType isEqualToString:NSSQLiteStoreType] || [storeType isEqualToString:NSBinaryStoreType] || [storeType isEqualToString:NSInMemoryStoreType]);
     if (![storeType isEqualToString:NSInMemoryStoreType]) {
-        NSParameterAssert(storeFileName != nil);
+        NSParameterAssert((storeFileName != nil) != (storeURL != nil));
     }
-
+    
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSAssert(model != nil, @"Failed to initialize model with URL: %@", modelURL);
-
+    
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
     NSAssert(persistentStoreCoordinator != nil, @"Failed to initialize persistent store coordinator with model: %@", model);
-
+    
     psc_privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     psc_privateContext.persistentStoreCoordinator = persistentStoreCoordinator;
-
+    
     psc_mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     psc_mainContext.parentContext = psc_privateContext;
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *storeURL = nil;
-
-        if (storeFileName != nil) {
-            storeURL = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
-            storeURL = [storeURL URLByAppendingPathComponent:storeFileName];
+        __block NSURL *url = storeURL;
+        
+        if (url == nil) {
+            url = [[[NSFileManager new] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
+            
+            if(storeFileName != nil) {
+                url = [url URLByAppendingPathComponent:storeFileName];
+            }
         }
-
+        
         NSError *error = nil;
         NSPersistentStore *store = [persistentStoreCoordinator addPersistentStoreWithType:storeType
                                                                             configuration:configuration
-                                                                                      URL:storeURL
+                                                                                      URL:url
                                                                                   options:options
                                                                                     error:&error];
-
+        
         if (store == nil) {
             PSCCDLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
-
+            
             if (errorBlock != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     errorBlock(error);
@@ -79,10 +83,11 @@ static NSManagedObjectContext *psc_privateContext = nil;
 
 + (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
-
+    
     [self setupWithModelURL:modelURL
               storeFileName:storeFileName
                        type:NSSQLiteStoreType
+                   storeURL:nil
               configuration:nil
                     options:options
                     success:successBlock
@@ -126,6 +131,47 @@ static NSManagedObjectContext *psc_privateContext = nil;
 
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue {
     return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+}
+
++ (void)setStoreURL:(NSURL *)storeURL {
+    NSPersistentStoreCoordinator *storeCoordinator = psc_privateContext.persistentStoreCoordinator;
+    NSArray *stores = storeCoordinator.persistentStores;
+    
+    NSAssert([stores count] == 1, @"PSCCoreDataStack doesn't support changing storeURL for multiple Stores");
+    
+    NSPersistentStore *store = stores[0];
+    
+    if (![store.URL isEqual:storeURL]) {
+        NSError *error;
+        NSPersistentStore *newPersistanceStore = [psc_privateContext.persistentStoreCoordinator migratePersistentStore:store toURL:storeURL options:nil withType:store.type error:&error];
+        
+        if (newPersistanceStore) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            
+            if ([fileManager fileExistsAtPath:[store.URL path]]) {
+                [fileManager removeItemAtURL:store.URL error:&error];
+            }
+            
+            NSURL *shm = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
+            if ([fileManager fileExistsAtPath:[shm path]]) {
+                NSURL *newSHM = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
+                
+                [fileManager moveItemAtURL:shm toURL:newSHM error:&error];
+            }
+            
+            NSURL *wal = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
+            if ([fileManager fileExistsAtPath:[wal path]]) {
+                NSURL *newWAL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
+                
+                [fileManager moveItemAtURL:wal toURL:newWAL error:&error];
+            }
+            else {
+                NSLog(@"%@ %@", [error localizedDescription], [error userInfo]);
+                
+                abort();
+            }
+        }
+    }
 }
 
 @end

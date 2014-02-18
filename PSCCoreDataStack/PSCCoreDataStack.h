@@ -20,6 +20,7 @@
 + (void)setupWithModelURL:(NSURL *)modelURL
             storeFileName:(NSString *)storeFileName
                      type:(NSString *)storeType
+                 storeURL:(NSURL *)storeURL
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
                   success:(void(^)())successBlock
@@ -37,5 +38,7 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 
 + (NSManagedObjectContext *)mainContext;
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue;
+
++ (void)setStoreURL:(NSURL *)storeURL;
 
 @end
