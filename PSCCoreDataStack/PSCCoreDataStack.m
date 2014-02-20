@@ -133,7 +133,11 @@ static NSManagedObjectContext *psc_privateContext = nil;
     return [[self mainContext] newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 }
 
-+ (void)setStoreURL:(NSURL *)storeURL {
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Migration
+////////////////////////////////////////////////////////////////////////
+
++ (void)migratePersistentStoreToURL:(NSURL *)storeURL {
     NSPersistentStoreCoordinator *storeCoordinator = psc_privateContext.persistentStoreCoordinator;
     NSArray *stores = storeCoordinator.persistentStores;
     
@@ -143,33 +147,24 @@ static NSManagedObjectContext *psc_privateContext = nil;
     
     if (![store.URL isEqual:storeURL]) {
         NSError *error;
-        NSPersistentStore *newPersistanceStore = [psc_privateContext.persistentStoreCoordinator migratePersistentStore:store toURL:storeURL options:nil withType:store.type error:&error];
+        [psc_privateContext.persistentStoreCoordinator migratePersistentStore:store toURL:storeURL options:nil withType:store.type error:&error];
         
-        if (newPersistanceStore) {
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            
-            if ([fileManager fileExistsAtPath:[store.URL path]]) {
-                [fileManager removeItemAtURL:store.URL error:&error];
-            }
-            
-            NSURL *shm = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
-            if ([fileManager fileExistsAtPath:[shm path]]) {
-                NSURL *newSHM = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
-                
-                [fileManager moveItemAtURL:shm toURL:newSHM error:&error];
-            }
-            
-            NSURL *wal = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
-            if ([fileManager fileExistsAtPath:[wal path]]) {
-                NSURL *newWAL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
-                
-                [fileManager moveItemAtURL:wal toURL:newWAL error:&error];
-            }
-            else {
-                NSLog(@"%@ %@", [error localizedDescription], [error userInfo]);
-                
-                abort();
-            }
+        NSAssert(error == nil, @"Error migrating persistent store %@ %@\n%@", psc_privateContext, [error localizedDescription], [error userInfo]);
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if ([fileManager fileExistsAtPath:[store.URL path]]) {
+            [fileManager removeItemAtURL:store.URL error:&error];
+        }
+        
+        NSURL *shm = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
+        if ([fileManager fileExistsAtPath:[shm path]]) {
+            [fileManager removeItemAtURL:shm error:&error];
+        }
+        
+        NSURL *wal = [[store.URL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
+        if ([fileManager fileExistsAtPath:[wal path]]) {
+            [fileManager removeItemAtURL:wal error:&error];
         }
     }
 }
