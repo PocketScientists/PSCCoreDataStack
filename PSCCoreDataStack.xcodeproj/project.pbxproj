@@ -9,11 +9,6 @@
 /* Begin PBXBuildFile section */
 		9B17A9F617025C8300DEF0B9 /* PSCPersistenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */; };
 		9B5FDB1A16FC65AB002FA5A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */; };
-		9B5FDB2916FC65AC002FA5A6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB2816FC65AC002FA5A6 /* SenTestingKit.framework */; };
-		9B5FDB2C16FC65AC002FA5A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */; };
-		9B5FDB2F16FC65AC002FA5A6 /* libPSCCoreDataStack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */; };
-		9B5FDB3516FC65AC002FA5A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B5FDB3316FC65AC002FA5A6 /* InfoPlist.strings */; };
-		9B5FDB3816FC65AC002FA5A6 /* PSCCoreDataStackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB3716FC65AC002FA5A6 /* PSCCoreDataStackTests.m */; };
 		9B5FDB4916FC65DA002FA5A6 /* NSManagedObject+PSCCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4216FC65DA002FA5A6 /* NSManagedObject+PSCCoreDataHelper.m */; };
 		9B5FDB4A16FC65DA002FA5A6 /* NSManagedObjectContext+PSCCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4416FC65DA002FA5A6 /* NSManagedObjectContext+PSCCoreDataHelper.m */; };
 		9B5FDB4B16FC65DA002FA5A6 /* PSCContextWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4616FC65DA002FA5A6 /* PSCContextWatcher.m */; };
@@ -22,16 +17,6 @@
 		9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */; };
 		9B5FDB5B16FC7387002FA5A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9B5FDB2D16FC65AC002FA5A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B5FDB0E16FC65AB002FA5A6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9B5FDB1516FC65AB002FA5A6;
-			remoteInfo = PSCCoreDataStack;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		9B5FDB1416FC65AB002FA5A6 /* CopyFiles */ = {
@@ -51,7 +36,6 @@
 		9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPSCCoreDataStack.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5FDB1916FC65AB002FA5A6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9B5FDB1D16FC65AB002FA5A6 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		9B5FDB2716FC65AC002FA5A6 /* PSCCoreDataStackTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PSCCoreDataStackTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5FDB2816FC65AC002FA5A6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9B5FDB3216FC65AC002FA5A6 /* PSCCoreDataStackTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PSCCoreDataStackTests-Info.plist"; sourceTree = "<group>"; };
 		9B5FDB3416FC65AC002FA5A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -83,16 +67,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9B5FDB2316FC65AC002FA5A6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9B5FDB2916FC65AC002FA5A6 /* SenTestingKit.framework in Frameworks */,
-				9B5FDB2C16FC65AC002FA5A6 /* Foundation.framework in Frameworks */,
-				9B5FDB2F16FC65AC002FA5A6 /* libPSCCoreDataStack.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -110,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */,
-				9B5FDB2716FC65AC002FA5A6 /* PSCCoreDataStackTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -194,31 +167,13 @@
 			productReference = 9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		9B5FDB2616FC65AC002FA5A6 /* PSCCoreDataStackTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9B5FDB3E16FC65AC002FA5A6 /* Build configuration list for PBXNativeTarget "PSCCoreDataStackTests" */;
-			buildPhases = (
-				9B5FDB2216FC65AC002FA5A6 /* Sources */,
-				9B5FDB2316FC65AC002FA5A6 /* Frameworks */,
-				9B5FDB2416FC65AC002FA5A6 /* Resources */,
-				9B5FDB2516FC65AC002FA5A6 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9B5FDB2E16FC65AC002FA5A6 /* PBXTargetDependency */,
-			);
-			name = PSCCoreDataStackTests;
-			productName = PSCCoreDataStackTests;
-			productReference = 9B5FDB2716FC65AC002FA5A6 /* PSCCoreDataStackTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		9B5FDB0E16FC65AB002FA5A6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = PocketScience;
 			};
@@ -235,37 +190,9 @@
 			projectRoot = "";
 			targets = (
 				9B5FDB1516FC65AB002FA5A6 /* PSCCoreDataStack */,
-				9B5FDB2616FC65AC002FA5A6 /* PSCCoreDataStackTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		9B5FDB2416FC65AC002FA5A6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9B5FDB3516FC65AC002FA5A6 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		9B5FDB2516FC65AC002FA5A6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9B5FDB1216FC65AB002FA5A6 /* Sources */ = {
@@ -281,23 +208,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9B5FDB2216FC65AC002FA5A6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9B5FDB3816FC65AC002FA5A6 /* PSCCoreDataStackTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9B5FDB2E16FC65AC002FA5A6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9B5FDB1516FC65AB002FA5A6 /* PSCCoreDataStack */;
-			targetProxy = 9B5FDB2D16FC65AC002FA5A6 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9B5FDB3316FC65AC002FA5A6 /* InfoPlist.strings */ = {
@@ -388,36 +299,6 @@
 			};
 			name = Release;
 		};
-		9B5FDB3F16FC65AC002FA5A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PSCCoreDataStack/PSCCoreDataStack-Prefix.pch";
-				INFOPLIST_FILE = "PSCCoreDataStackTests/PSCCoreDataStackTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		9B5FDB4016FC65AC002FA5A6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PSCCoreDataStack/PSCCoreDataStack-Prefix.pch";
-				INFOPLIST_FILE = "PSCCoreDataStackTests/PSCCoreDataStackTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -435,15 +316,6 @@
 			buildConfigurations = (
 				9B5FDB3C16FC65AC002FA5A6 /* Debug */,
 				9B5FDB3D16FC65AC002FA5A6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9B5FDB3E16FC65AC002FA5A6 /* Build configuration list for PBXNativeTarget "PSCCoreDataStackTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9B5FDB3F16FC65AC002FA5A6 /* Debug */,
-				9B5FDB4016FC65AC002FA5A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
