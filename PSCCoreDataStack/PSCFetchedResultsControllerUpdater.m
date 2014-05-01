@@ -8,6 +8,8 @@
 
 #import "PSCFetchedResultsControllerUpdater.h"
 
+NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification = @"PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification";
+
 
 @implementation PSCFetchedResultsControllerMove
 
@@ -35,7 +37,7 @@
     if ((self = [super init])) {
         _reportMovesAsInsertionsAndDeletions = YES;
     }
-
+    
     return self;
 }
 
@@ -82,7 +84,9 @@
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    // do nothing specific here
+    NSDictionary *userInfo = @{NSInsertedObjectsKey: self.insertedObjectIndexPaths, NSUpdatedObjectsKey: self.updatedObjectIndexPaths, NSDeletedObjectsKey: self.deletedObjectIndexPaths};
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification object:self userInfo:userInfo]];
+    
 }
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
@@ -106,26 +110,26 @@
             [_deletedObjectIndexPaths addObject:indexPath];
         }
     }
-
+    
     else if (type == NSFetchedResultsChangeMove) {
         if (self.reportMovesAsInsertionsAndDeletions) {
             if (![_insertedSectionIndexes containsIndex:newIndexPath.section]) {
                 [_insertedObjectIndexPaths addObject:newIndexPath];
             }
-
+            
             if (![_deletedSectionIndexes containsIndex:indexPath.section]) {
                 [_deletedObjectIndexPaths addObject:indexPath];
             }
         } else {
             // TODO: do we need to check the inserted/deleted sections here as well?
             PSCFetchedResultsControllerMove *move = [PSCFetchedResultsControllerMove new];
-
+            
             move.fromIndexPath = indexPath;
             move.toIndexPath = newIndexPath;
             [_movedObjectIndexPaths addObject:move];
         }
     }
-
+    
     else if (type == NSFetchedResultsChangeUpdate) {
         [_updatedObjectIndexPaths addObject:indexPath];
     }
@@ -140,12 +144,12 @@
             [_insertedSectionIndexes addIndex:sectionIndex];
             break;
         }
-
+            
         case NSFetchedResultsChangeDelete: {
             [_deletedSectionIndexes addIndex:sectionIndex];
             break;
         }
-
+            
         default: {
             // Shouldn't have a default
             break;
