@@ -38,4 +38,6 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 + (NSManagedObjectContext *)mainContext;
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue;
 
++ (BOOL)clearSQLiteDatabase:(NSManagedObjectContext *)context;
+
 @end

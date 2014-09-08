@@ -89,6 +89,48 @@ static NSManagedObjectContext *psc_privateContext = nil;
                       error:errorBlock];
 }
 
++ (BOOL)clearSQLiteDatabase:(NSManagedObjectContext *)context {
+    // find top most context with store coordinator
+    NSManagedObjectContext *topContext = context;
+    while (topContext.parentContext != nil) {
+        topContext = topContext.parentContext;
+    }
+    
+    NSError * error;
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [topContext persistentStoreCoordinator];
+    NSPersistentStore *store = [[persistentStoreCoordinator persistentStores] lastObject];
+
+    // retrieve the store URL, configuration, and options
+    NSURL * storeURL = [persistentStoreCoordinator URLForPersistentStore:store];
+    NSDictionary *options = [store options];
+    NSString *configurationName = [store configurationName];
+
+    // lock the current context
+    [context lock];
+    // reset all contexts
+    NSManagedObjectContext *curContext = context;
+    [curContext reset];
+    while (curContext.parentContext != nil) {
+        curContext = curContext.parentContext;
+        [curContext reset];
+    }
+
+    // lock the current context
+    [topContext lock];
+    //delete the store from the current managedObjectContext
+    BOOL result = [persistentStoreCoordinator removePersistentStore:store error:&error];
+    if (result) {
+        // remove the file containing the data
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
+        //recreate the store like in the  appDelegate method
+        [persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:configurationName URL:storeURL options:options error:&error]; //recreates the persistent store
+    }
+    [topContext unlock];
+    [context unlock];
+    
+    return result;
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - Saving
 ////////////////////////////////////////////////////////////////////////
