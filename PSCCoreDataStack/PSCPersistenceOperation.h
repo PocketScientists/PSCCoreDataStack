@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <CoreData/CoreData.h>
 
 typedef BOOL(^psc_persistence_block)(NSManagedObjectContext *localContext);
 

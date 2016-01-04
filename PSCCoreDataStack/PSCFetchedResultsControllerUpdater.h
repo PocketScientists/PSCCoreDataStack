@@ -38,6 +38,8 @@
  
  */
 
+#import <CoreData/CoreData.h>
+
 extern NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification;
 
 @interface PSCFetchedResultsControllerUpdater : NSObject <NSFetchedResultsControllerDelegate>
