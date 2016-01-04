@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage          = 'http://nousguide.com/'
   s.documentation_url = 'http://nousguide.com/help/'
 
-  s.license      = { :type => 'MIT', :file => 'LICENCE.md' }
+  s.license      = { :file => 'LICENCE' }
   s.author            = { 'Thomas Heingaertner' => 'mail@t.heingaertner@nousguide.com', 'Alexander Wold' => 'mail@a.wolf@nousguide.com' }
   s.source            = { :git => 'https://github.com/PocketScientists/PSCCoreDataStack.git', :tag => s.version.to_s }
 
