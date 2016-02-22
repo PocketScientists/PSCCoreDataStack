@@ -102,6 +102,35 @@
     return success;
 }
 
+- (BOOL)saveAndPropagateToParentContextBlockingDoNotSaveParentContext:(BOOL)wait success:(void(^)())successBlock failure:(void(^)(NSError *error))failureBlock {
+    __block BOOL success = YES;
+    __block NSError *error = nil;
+    if (self.hasChanges) {
+        if (self.concurrencyType == NSConfinementConcurrencyType) {
+            success = [self save:&error];
+        } else {
+            [self performBlockAndWait:^{
+                success = [self save:&error];
+            }];
+        }
+    }
+    
+    if (!success) {
+        if (failureBlock) {
+            failureBlock(error);
+        }
+        return NO;
+    }
+    
+if (success && successBlock) {
+        successBlock();
+    }
+    
+    return success;
+}
+
+
+
 - (BOOL)saveAndPropagateToParentContextWithSuccess:(void(^)())successBlock failure:(void(^)(NSError *error))failureBlock {
     return [self saveAndPropagateToParentContextBlocking:NO success:successBlock failure:failureBlock];
 }

@@ -14,8 +14,8 @@
 
 - (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContextBlocking:success:failure' instead")));
 - (BOOL)saveAndPropagateToParentContext:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContexWithSuccess:failure' instead")));
-
 - (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)())sucess failure:(void(^)(NSError *error))failure;
+- (BOOL)saveAndPropagateToParentContextBlockingDoNotSaveParentContext:(BOOL)wait success:(void(^)())successBlock failure:(void(^)(NSError *error))failureBlock; //added by JGRU due to grandchild context issues
 - (BOOL)saveAndPropagateToParentContextWithSuccess:(void(^)())sucess failure:(void(^)(NSError *error))failure;
 
 @end
