@@ -60,6 +60,13 @@ static NSManagedObjectContext *psc_privateContext = nil;
                                                                                       URL:storeURL
                                                                                   options:options
                                                                                     error:&error];
+        if(error != nil){
+            if (errorBlock != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    errorBlock(error);
+                });
+            }
+        }        
 
         if (store == nil) {
             PSCCDLog(@"Error adding persistent store to coordinator %@\n%@", [error localizedDescription], [error userInfo]);
