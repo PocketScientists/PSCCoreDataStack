@@ -11,10 +11,10 @@
 
 - (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType;
 
-- (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContextBlocking:success:failure' instead")));
-- (BOOL)saveAndPropagateToParentContext:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContexWithSuccess:failure' instead")));
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContextBlocking:success:failure' instead")));
+- (void)saveAndPropagateToParentContext:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContexWithSuccess:failure' instead")));
 
-- (BOOL)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)())sucess failure:(void(^)(NSError *error))failure;
-- (BOOL)saveAndPropagateToParentContextWithSuccess:(void(^)())sucess failure:(void(^)(NSError *error))failure;
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)())sucess failure:(void(^)(NSError *error))failure;
+- (void)saveAndPropagateToParentContextWithSuccess:(void(^)())sucess failure:(void(^)(NSError *error))failure;
 
 @end
