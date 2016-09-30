@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 PocketScience. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface PSCCoreDataStackTests : SenTestCase
+@interface PSCCoreDataStackTests : XCTestCase
 
 @end
