@@ -14,7 +14,7 @@
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContextBlocking:success:failure' instead")));
 - (void)saveAndPropagateToParentContext:(NSError **)error __attribute__((deprecated("use 'saveAndPropagateToParentContexWithSuccess:failure' instead")));
 
-- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)())sucess failure:(void(^)(NSError *error))failure;
-- (void)saveAndPropagateToParentContextWithSuccess:(void(^)())sucess failure:(void(^)(NSError *error))failure;
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)(void))sucess failure:(void(^)(NSError *error))failure;
+- (void)saveAndPropagateToParentContextWithSuccess:(void(^)(void))sucess failure:(void(^)(NSError *error))failure;
 
 @end

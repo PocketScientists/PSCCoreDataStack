@@ -26,7 +26,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
                  storeURL:(NSURL *)storeURL
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
-                  success:(void(^)())successBlock
+                  success:(void(^)(void))successBlock
                     error:(void(^)(NSError *error))errorBlock {
     
     NSParameterAssert(modelURL != nil);
@@ -81,7 +81,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
     });
 }
 
-+ (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock {
++ (void)setupWithModelURL:(NSURL *)modelURL autoMigratedSQLiteStoreFileName:(NSString *)storeFileName success:(void(^)(void))successBlock error:(void(^)(NSError *error))errorBlock {
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES), NSInferMappingModelAutomaticallyOption: @(YES)};
     
     [self setupWithModelURL:modelURL
@@ -106,7 +106,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
     [self saveAndPersistContextBlocking:NO];
 }
 
-+ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock {
++ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock {
     [[self mainContext] saveAndPropagateToParentContextBlocking:wait success:sucessBlock failure:^(NSError *error) {
         PSCCDLog(@"%@ %@", [error localizedDescription], [error userInfo]);
         if (errorBlock) {
@@ -115,7 +115,7 @@ static NSManagedObjectContext *psc_privateContext = nil;
     }];
 }
 
-+ (void)saveAndPersistContextWithSuccess:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock {
++ (void)saveAndPersistContextWithSuccess:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock {
     [self saveAndPersistContextBlocking:NO success:sucessBlock error:errorBlock];
 }
 

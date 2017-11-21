@@ -64,7 +64,7 @@
     [self saveAndPropagateToParentContextBlocking:NO error:error];
 }
 
-- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)())successBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)(void))successBlock failure:(void(^)(NSError *error))failureBlock {
     dispatch_block_t parentCheck = ^{
         if (self.parentContext.hasChanges) {
             dispatch_block_t saveParent = ^{
@@ -116,7 +116,7 @@
     }
 }
 
-- (void)saveAndPropagateToParentContextWithSuccess:(void(^)())successBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)saveAndPropagateToParentContextWithSuccess:(void(^)(void))successBlock failure:(void(^)(NSError *error))failureBlock {
     [self saveAndPropagateToParentContextBlocking:NO success:successBlock failure:failureBlock];
 }
 

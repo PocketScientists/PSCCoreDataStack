@@ -23,18 +23,18 @@
                  storeURL:(NSURL *)storeURL
             configuration:(NSString *)configuration
                   options:(NSDictionary *)options
-                  success:(void(^)())successBlock
+                  success:(void(^)(void))successBlock
                     error:(void(^)(NSError *error))errorBlock;
 
 + (void)setupWithModelURL:(NSURL *)modelURL
 autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
-                  success:(void(^)())successBlock error:(void(^)(NSError *error))errorBlock;
+                  success:(void(^)(void))successBlock error:(void(^)(NSError *error))errorBlock;
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
 + (void)saveAndPersistContext;
 
-+ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock;
-+ (void)saveAndPersistContextWithSuccess:(void(^)())sucessBlock error:(void(^)(NSError *error))errorBlock;
++ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock;
++ (void)saveAndPersistContextWithSuccess:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock;
 
 + (NSManagedObjectContext *)mainContext;
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue;
