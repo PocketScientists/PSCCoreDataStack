@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D261E0A4710B0DA4CAA16F150E6AB7046AB2576A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D261E0A4710B0DA4CAA16F150E6AB7046AB2576A" : 9223372036854775807,
+    "5CAD9AD776377F08EC40032FFD796FFA54F88822" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5385F887-07A2-4B63-A6A2-92D5CD1792C8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D261E0A4710B0DA4CAA16F150E6AB7046AB2576A" : "PSCCoreDataStack\/",
+    "5CAD9AD776377F08EC40032FFD796FFA54F88822" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "PSCCoreDataStack",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "PSCCoreDataStack.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/sources-headless.app.redbull.com\/scm\/fft\/bullchecker-client.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5CAD9AD776377F08EC40032FFD796FFA54F88822"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/sources-headless.app.redbull.com\/scm\/fft\/psccoredatastack.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D261E0A4710B0DA4CAA16F150E6AB7046AB2576A"
+    }
+  ]
+}
