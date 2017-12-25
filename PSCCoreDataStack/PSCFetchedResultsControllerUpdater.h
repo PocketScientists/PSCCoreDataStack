@@ -7,6 +7,8 @@
 //
 //  Derived from MrRooni's Gist: https://gist.github.com/MrRooni/4988922
 
+#import <CoreData/CoreData.h>
+
 
 /**
  Controller that can be used to gather information about animated updates in a UITableView/UICollectionView.

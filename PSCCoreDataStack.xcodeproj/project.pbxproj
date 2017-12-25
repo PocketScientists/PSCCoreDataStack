@@ -16,6 +16,22 @@
 		9B5FDB4E16FC660C002FA5A6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */; };
 		9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */; };
 		9B5FDB5B16FC7387002FA5A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */; };
+		A9BD92891FF15E9900F4B027 /* PSCCoreData.h in Headers */ = {isa = PBXBuildFile; fileRef = A9BD92871FF15E9900F4B027 /* PSCCoreData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD928D1FF15EC300F4B027 /* NSManagedObject+PSCCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4216FC65DA002FA5A6 /* NSManagedObject+PSCCoreDataHelper.m */; };
+		A9BD928E1FF15EC600F4B027 /* NSManagedObjectContext+PSCCoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4416FC65DA002FA5A6 /* NSManagedObjectContext+PSCCoreDataHelper.m */; };
+		A9BD928F1FF15EC900F4B027 /* PSCContextWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4616FC65DA002FA5A6 /* PSCContextWatcher.m */; };
+		A9BD92901FF15ED000F4B027 /* PSCCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB4816FC65DA002FA5A6 /* PSCCoreDataStack.m */; };
+		A9BD92911FF15ED500F4B027 /* PSCFetchedResultsControllerUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */; };
+		A9BD92921FF15ED900F4B027 /* PSCPersistenceOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B17A9F517025C8300DEF0B9 /* PSCPersistenceOperation.m */; };
+		A9BD92931FF15F1100F4B027 /* NSManagedObject+PSCCoreDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB4116FC65DA002FA5A6 /* NSManagedObject+PSCCoreDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92941FF15F1400F4B027 /* NSManagedObjectContext+PSCCoreDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB4316FC65DA002FA5A6 /* NSManagedObjectContext+PSCCoreDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92951FF15F1700F4B027 /* PSCContextWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB4516FC65DA002FA5A6 /* PSCContextWatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92961FF15F2100F4B027 /* PSCCoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB4716FC65DA002FA5A6 /* PSCCoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92971FF15F2500F4B027 /* PSCFetchedResultsControllerUpdater.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92981FF15F3000F4B027 /* PSCPersistenceOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B17A9F417025C8300DEF0B9 /* PSCPersistenceOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92991FF15F3300F4B027 /* PSCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B6B3C56170F5496004DFAD7 /* PSCLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD929A1FF15F5100F4B027 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */; };
+		A9BD929B1FF15FEE00F4B027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +70,9 @@
 		9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCFetchedResultsControllerUpdater.m; sourceTree = "<group>"; };
 		9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9B6B3C56170F5496004DFAD7 /* PSCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSCLogging.h; sourceTree = "<group>"; };
+		A9BD92851FF15E9900F4B027 /* PSCCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PSCCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9BD92871FF15E9900F4B027 /* PSCCoreData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSCCoreData.h; sourceTree = "<group>"; };
+		A9BD92881FF15E9900F4B027 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +86,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9BD92811FF15E9900F4B027 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9BD929B1FF15FEE00F4B027 /* UIKit.framework in Frameworks */,
+				A9BD929A1FF15F5100F4B027 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -74,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				9B5FDB1B16FC65AB002FA5A6 /* PSCCoreDataStack */,
+				A9BD92861FF15E9900F4B027 /* PSCCoreData */,
 				9B5FDB1816FC65AB002FA5A6 /* Frameworks */,
 				9B5FDB3016FC65AC002FA5A6 /* PSCCoreDataStackTests */,
 				9B5FDB1716FC65AB002FA5A6 /* Products */,
@@ -84,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */,
+				A9BD92851FF15E9900F4B027 /* PSCCoreData.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,7 +177,34 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A9BD92861FF15E9900F4B027 /* PSCCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A9BD92871FF15E9900F4B027 /* PSCCoreData.h */,
+				A9BD92881FF15E9900F4B027 /* Info.plist */,
+			);
+			path = PSCCoreData;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A9BD92821FF15E9900F4B027 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9BD92891FF15E9900F4B027 /* PSCCoreData.h in Headers */,
+				A9BD92931FF15F1100F4B027 /* NSManagedObject+PSCCoreDataHelper.h in Headers */,
+				A9BD92941FF15F1400F4B027 /* NSManagedObjectContext+PSCCoreDataHelper.h in Headers */,
+				A9BD92951FF15F1700F4B027 /* PSCContextWatcher.h in Headers */,
+				A9BD92961FF15F2100F4B027 /* PSCCoreDataStack.h in Headers */,
+				A9BD92971FF15F2500F4B027 /* PSCFetchedResultsControllerUpdater.h in Headers */,
+				A9BD92981FF15F3000F4B027 /* PSCPersistenceOperation.h in Headers */,
+				A9BD92991FF15F3300F4B027 /* PSCLogging.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		9B5FDB1516FC65AB002FA5A6 /* PSCCoreDataStack */ = {
@@ -167,6 +224,24 @@
 			productReference = 9B5FDB1616FC65AB002FA5A6 /* libPSCCoreDataStack.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		A9BD92841FF15E9900F4B027 /* PSCCoreData */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9BD928C1FF15E9900F4B027 /* Build configuration list for PBXNativeTarget "PSCCoreData" */;
+			buildPhases = (
+				A9BD92801FF15E9900F4B027 /* Sources */,
+				A9BD92811FF15E9900F4B027 /* Frameworks */,
+				A9BD92821FF15E9900F4B027 /* Headers */,
+				A9BD92831FF15E9900F4B027 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PSCCoreData;
+			productName = PSCCoreData;
+			productReference = A9BD92851FF15E9900F4B027 /* PSCCoreData.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -176,6 +251,13 @@
 				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = PocketScience;
+				TargetAttributes = {
+					A9BD92841FF15E9900F4B027 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = Y6BEBK9HD8;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 9B5FDB1116FC65AB002FA5A6 /* Build configuration list for PBXProject "PSCCoreDataStack" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -190,9 +272,20 @@
 			projectRoot = "";
 			targets = (
 				9B5FDB1516FC65AB002FA5A6 /* PSCCoreDataStack */,
+				A9BD92841FF15E9900F4B027 /* PSCCoreData */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9BD92831FF15E9900F4B027 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9B5FDB1216FC65AB002FA5A6 /* Sources */ = {
@@ -205,6 +298,19 @@
 				9B5FDB4C16FC65DA002FA5A6 /* PSCCoreDataStack.m in Sources */,
 				9B5FDB5916FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m in Sources */,
 				9B17A9F617025C8300DEF0B9 /* PSCPersistenceOperation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9BD92801FF15E9900F4B027 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9BD92901FF15ED000F4B027 /* PSCCoreDataStack.m in Sources */,
+				A9BD928D1FF15EC300F4B027 /* NSManagedObject+PSCCoreDataHelper.m in Sources */,
+				A9BD928E1FF15EC600F4B027 /* NSManagedObjectContext+PSCCoreDataHelper.m in Sources */,
+				A9BD928F1FF15EC900F4B027 /* PSCContextWatcher.m in Sources */,
+				A9BD92921FF15ED900F4B027 /* PSCPersistenceOperation.m in Sources */,
+				A9BD92911FF15ED500F4B027 /* PSCFetchedResultsControllerUpdater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +432,84 @@
 			};
 			name = Release;
 		};
+		A9BD928A1FF15E9900F4B027 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Y6BEBK9HD8;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = PSCCoreData/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nousdigital.PSCCoreData;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A9BD928B1FF15E9900F4B027 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Y6BEBK9HD8;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = PSCCoreData/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nousdigital.PSCCoreData;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,6 +527,15 @@
 			buildConfigurations = (
 				9B5FDB3C16FC65AC002FA5A6 /* Debug */,
 				9B5FDB3D16FC65AC002FA5A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9BD928C1FF15E9900F4B027 /* Build configuration list for PBXNativeTarget "PSCCoreData" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9BD928A1FF15E9900F4B027 /* Debug */,
+				A9BD928B1FF15E9900F4B027 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -5,7 +5,7 @@
 //  Created by Philip Messlehner on 28.02.13.
 //  Copyright (c) 2013 Philip Messlehner. All rights reserved.
 //
-
+#import <CoreData/CoreData.h>
 
 @class PSCContextWatcher;
 

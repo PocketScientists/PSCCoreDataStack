@@ -7,6 +7,7 @@
 //
 
 #import "PSCFetchedResultsControllerUpdater.h"
+#import <UIKit/UIKit.h>
 
 NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification = @"PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification";
 
