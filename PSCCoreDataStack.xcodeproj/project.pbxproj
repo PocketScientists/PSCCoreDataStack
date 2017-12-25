@@ -29,7 +29,7 @@
 		A9BD92961FF15F2100F4B027 /* PSCCoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB4716FC65DA002FA5A6 /* PSCCoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9BD92971FF15F2500F4B027 /* PSCFetchedResultsControllerUpdater.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5FDB5716FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9BD92981FF15F3000F4B027 /* PSCPersistenceOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B17A9F417025C8300DEF0B9 /* PSCPersistenceOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A9BD92991FF15F3300F4B027 /* PSCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B6B3C56170F5496004DFAD7 /* PSCLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9BD92991FF15F3300F4B027 /* PSCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B6B3C56170F5496004DFAD7 /* PSCLogging.h */; };
 		A9BD929A1FF15F5100F4B027 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB4D16FC660C002FA5A6 /* CoreData.framework */; };
 		A9BD929B1FF15FEE00F4B027 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */; };
 /* End PBXBuildFile section */

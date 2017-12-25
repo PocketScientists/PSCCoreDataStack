@@ -15,5 +15,9 @@ FOUNDATION_EXPORT double PSCCoreDataVersionNumber;
 FOUNDATION_EXPORT const unsigned char PSCCoreDataVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PSCCoreData/PublicHeader.h>
-
-
+#import <PSCCoreData/NSManagedObject+PSCCoreDataHelper.h>
+#import <PSCCoreData/NSManagedObjectContext+PSCCoreDataHelper.h>
+#import <PSCCoreData/PSCContextWatcher.h>
+#import <PSCCoreData/PSCCoreDataStack.h>
+#import <PSCCoreData/PSCFetchedResultsControllerUpdater.h>
+#import <PSCCoreData/PSCPersistenceOperation.h>
