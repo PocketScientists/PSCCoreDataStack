@@ -78,9 +78,7 @@
                 }
             };
             
-            if (self.parentContext.concurrencyType == NSConfinementConcurrencyType) {
-                saveParent();
-            } else if (wait) {
+            if (wait) {
                 [self.parentContext performBlockAndWait:saveParent];
             } else {
                 [self.parentContext performBlock:saveParent];
@@ -103,9 +101,7 @@
             }
         };
 
-        if (self.concurrencyType == NSConfinementConcurrencyType) {
-            saveChild();
-        } else if (wait) {
+        if (wait) {
             [self performBlockAndWait:saveChild];
         } else {
             [self performBlock:saveChild];

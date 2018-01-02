@@ -57,7 +57,7 @@ typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
     deleteEntitiesNotInDictionary:(BOOL)deleteEntitiesNotInDictionary
             entityKeyInDictionary:(NSString *)dictionaryIDKeyPath
               entityKeyInDatabase:(NSString *)databaseIDKey
-                          context:(NSManagedObjectContext *)contex
+                          context:(NSManagedObjectContext *)context
                       updateBlock:(void(^)(id managedObject, NSDictionary *data))updateBlock
                             error:(NSError **)error;
 
