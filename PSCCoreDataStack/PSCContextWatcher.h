@@ -32,10 +32,11 @@
 
 @protocol PSCContextWatcherDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PSCContextWatcher : NSObject
 
-@property (nonatomic, weak) id<PSCContextWatcherDelegate> delegate;
+@property (nullable, nonatomic, weak) id<PSCContextWatcherDelegate> delegate;
 
 + (instancetype)watcherWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
@@ -53,9 +54,11 @@
 @protocol PSCContextWatcherDelegate <NSObject>
 
 - (void)contextWatcher:(PSCContextWatcher *)watcher
-    observedInsertions:(NSSet *)inserts
-             deletions:(NSSet *)deletions
-               updates:(NSSet *)updates
+    observedInsertions:(nullable NSSet<NSManagedObject *> *)inserts
+             deletions:(nullable NSSet<NSManagedObject *> *)deletions
+               updates:(nullable NSSet<NSManagedObject *> *)updates
              inContext:(NSManagedObjectContext *)context;
 
 @end
+
+NS_ASSUME_NONNULL_END

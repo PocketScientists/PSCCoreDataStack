@@ -15,6 +15,7 @@ typedef BOOL(^psc_persistence_block)(NSManagedObjectContext *localContext);
 // the queue used in persistDataInBackgroundWithParentContext:block:completion:
 dispatch_queue_t psc_persistence_queue(void);
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PSCPersistenceOperation : NSOperation
 
@@ -24,14 +25,14 @@ dispatch_queue_t psc_persistence_queue(void);
  */
 + (void)persistDataInBackgroundWithParentContext:(NSManagedObjectContext *)parentContext
                                            block:(psc_persistence_block)block
-                                      completion:(dispatch_block_t)completion;
+                                      completion:(nullable dispatch_block_t)completion;
 
 /**
  Creates an NSOperation subclass that can be used to persist data to a local context
  */
 + (instancetype)operationWithParentContext:(NSManagedObjectContext *)parentContext
                                      block:(psc_persistence_block)block
-                                completion:(dispatch_block_t)completion;
+                                completion:(nullable dispatch_block_t)completion;
 
 /** Subclasses can override to perform a persistence action */
 - (BOOL)persistWithContext:(NSManagedObjectContext *)localContext;
@@ -41,3 +42,5 @@ dispatch_queue_t psc_persistence_queue(void);
 - (void)didNotSaveContext:(NSManagedObjectContext *)localContext;
 
 @end
+
+NS_ASSUME_NONNULL_END

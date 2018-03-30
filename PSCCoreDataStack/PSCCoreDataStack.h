@@ -14,27 +14,28 @@
 #import "PSCFetchedResultsControllerUpdater.h"
 #import "PSCPersistenceOperation.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PSCCoreDataStack : NSObject
 
 + (void)setupWithModelURL:(NSURL *)modelURL
-            storeFileName:(NSString *)storeFileName
+            storeFileName:(nullable NSString *)storeFileName
                      type:(NSString *)storeType
-                 storeURL:(NSURL *)storeURL
-            configuration:(NSString *)configuration
-                  options:(NSDictionary *)options
-                  success:(void(^)(void))successBlock
-                    error:(void(^)(NSError *error))errorBlock;
+                 storeURL:(nullable NSURL *)storeURL
+            configuration:(nullable NSString *)configuration
+                  options:(nullable NSDictionary *)options
+                  success:(nullable void(^)(void))successBlock
+                    error:(nullable void(^)(NSError *error))errorBlock;
 
 + (void)setupWithModelURL:(NSURL *)modelURL
 autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
-                  success:(void(^)(void))successBlock error:(void(^)(NSError *error))errorBlock;
+                  success:(nullable void(^)(void))successBlock error:(nullable void(^)(NSError *error))errorBlock;
 
 + (void)saveAndPersistContextBlocking:(BOOL)wait;
 + (void)saveAndPersistContext;
 
-+ (void)saveAndPersistContextBlocking:(BOOL)wait success:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock;
-+ (void)saveAndPersistContextWithSuccess:(void(^)(void))sucessBlock error:(void(^)(NSError *error))errorBlock;
++ (void)saveAndPersistContextBlocking:(BOOL)wait success:(nullable void(^)(void))sucessBlock error:(nullable void(^)(NSError *error))errorBlock;
++ (void)saveAndPersistContextWithSuccess:(nullable void(^)(void))sucessBlock error:(nullable void(^)(NSError *error))errorBlock;
 
 + (NSManagedObjectContext *)mainContext;
 + (NSManagedObjectContext *)newChildContextWithPrivateQueue;
@@ -42,3 +43,5 @@ autoMigratedSQLiteStoreFileName:(NSString *)storeFileName
 + (void)migratePersistentStoreToURL:(NSURL *)storeURL;
 
 @end
+
+NS_ASSUME_NONNULL_END

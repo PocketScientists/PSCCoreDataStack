@@ -40,6 +40,8 @@
  
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeContentNotification;
 
 @interface PSCFetchedResultsControllerUpdater : NSObject <NSFetchedResultsControllerDelegate>
@@ -52,10 +54,10 @@ extern NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeCont
 @property (nonatomic, readonly) NSIndexSet *deletedSectionIndexes;
 @property (nonatomic, readonly) NSIndexSet *insertedSectionIndexes;
 
-@property (nonatomic, readonly) NSArray *deletedObjectIndexPaths;
-@property (nonatomic, readonly) NSArray *insertedObjectIndexPaths;
-@property (nonatomic, readonly) NSArray *updatedObjectIndexPaths;
-@property (nonatomic, readonly) NSArray *movedObjectIndexPaths; // only set if reportMovesAsInsertionsAndDeletions is NO
+@property (nonatomic, readonly) NSArray<NSIndexPath *> *deletedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray<NSIndexPath *> *insertedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray<NSIndexPath *> *updatedObjectIndexPaths;
+@property (nonatomic, readonly) NSArray<NSIndexPath *> *movedObjectIndexPaths; // only set if reportMovesAsInsertionsAndDeletions is NO
 
 - (void)reset;
 - (void)resetSectionChanges;
@@ -70,3 +72,5 @@ extern NSString *const PSCFetchedResultsControllerUpdaterControllerDidChangeCont
 @property (nonatomic, strong) NSIndexPath *toIndexPath;
 
 @end
+
+NS_ASSUME_NONNULL_END

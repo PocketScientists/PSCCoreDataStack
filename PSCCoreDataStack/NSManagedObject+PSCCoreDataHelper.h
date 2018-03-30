@@ -10,33 +10,34 @@
 @class PSCContextWatcher;
 
 
-typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
+typedef void(^psc_request_block)(NSFetchRequest * _Nonnull fetchRequest);
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSManagedObject (PSCCoreDataHelper)
 
 @property (nonatomic, readonly) NSManagedObjectID *permanentObjectID;
 
 + (instancetype)newObjectInContext:(NSManagedObjectContext *)context;
-+ (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context;
++ (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(nullable id)value inContext:(NSManagedObjectContext *)context;
 
-+ (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate
-                    requestConfiguration:(psc_request_block)requestConfigurationBlock
++ (NSUInteger)deleteAllMatchingPredicate:(nullable NSPredicate *)predicate
+                    requestConfiguration:(nullable psc_request_block)requestConfigurationBlock
                                inContext:(NSManagedObjectContext *)context
-                                   error:(NSError **)error;
-+ (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
+                                   error:(NSError * _Nullable * _Nullable)error;
++ (NSUInteger)deleteAllMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
-+ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
-+ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
++ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
++ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
 
-+ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate
-                  requestConfiguration:(psc_request_block)requestConfigurationBlock
-                             inContext:(NSManagedObjectContext *)context
-                                 error:(NSError **)error;
-+ (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
-+ (instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
++ (nullable NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate
+                           requestConfiguration:(nullable psc_request_block)requestConfigurationBlock
+                                      inContext:(NSManagedObjectContext *)context
+                                          error:(NSError * _Nullable * _Nullable)error;
++ (nullable NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
++ (nullable instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
-+ (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
++ (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
 /**
  High-level action to update the data in Core Data based on an array of dictionaries.
@@ -59,7 +60,7 @@ typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
               entityKeyInDatabase:(NSString *)databaseIDKey
                           context:(NSManagedObjectContext *)context
                       updateBlock:(void(^)(id managedObject, NSDictionary *data))updateBlock
-                            error:(NSError **)error;
+                            error:(NSError * _Nullable * _Nullable)error;
 
 - (void)reset;
 - (void)deleteFromContext;
@@ -67,3 +68,5 @@ typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
 - (id)userInfoValueForKey:(NSString *)key ofProperty:(NSString *)property;
 
 @end
+
+NS_ASSUME_NONNULL_END
