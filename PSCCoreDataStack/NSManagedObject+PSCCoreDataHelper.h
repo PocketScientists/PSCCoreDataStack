@@ -27,17 +27,17 @@ NS_ASSUME_NONNULL_BEGIN
                                    error:(NSError * _Nullable * _Nullable)error;
 + (NSUInteger)deleteAllMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
-+ (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
-+ (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
++ (NSFetchRequest *)requestAllMatchingPredicate:(nullable NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
++ (NSFetchRequest *)requestFirstMatchingPredicate:(nullable NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
 
-+ (nullable NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate
++ (nullable NSArray *)fetchAllMatchingPredicate:(nullable NSPredicate *)predicate
                            requestConfiguration:(nullable psc_request_block)requestConfigurationBlock
                                       inContext:(NSManagedObjectContext *)context
                                           error:(NSError * _Nullable * _Nullable)error;
-+ (nullable NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
-+ (nullable instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
++ (nullable NSArray *)fetchAllMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
++ (nullable instancetype)fetchFirstMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
-+ (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
++ (NSUInteger)countOfObjectsMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
 /**
  High-level action to update the data in Core Data based on an array of dictionaries.
