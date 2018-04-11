@@ -11,7 +11,7 @@
 
 @implementation NSManagedObjectContext (PSCCoreDataHelper)
 
-- (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType {
+- (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType {
     NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
     childContext.parentContext = self;
 

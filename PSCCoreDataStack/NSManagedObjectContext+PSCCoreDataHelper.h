@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSManagedObjectContext (PSCCoreDataHelper)
 
-- (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSUInteger)concurrencyType;
+- (NSManagedObjectContext *)newChildContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType;
 
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(NSError * _Nullable * _Nullable)error __attribute__((deprecated("use 'saveAndPropagateToParentContextBlocking:success:failure' instead")));
 - (void)saveAndPropagateToParentContext:(NSError * _Nullable * _Nullable)error __attribute__((deprecated("use 'saveAndPropagateToParentContexWithSuccess:failure' instead")));
