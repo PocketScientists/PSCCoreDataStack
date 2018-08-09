@@ -17,13 +17,13 @@
 #pragma mark - Class Methods
 ////////////////////////////////////////////////////////////////////////
 
-+ (instancetype)newObjectInContext:(NSManagedObjectContext *)context {
++ (instancetype _Nonnull)newObjectInContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context != nil);
 
     return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
 }
 
-+ (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context {
++ (instancetype _Nonnull)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(id)value inContext:(NSManagedObjectContext *)context {
     NSParameterAssert(attribute != nil);
     NSParameterAssert(context != nil);
 
@@ -46,7 +46,7 @@
         [object setValue:value forKey:attribute];
     }
 
-    return object;
+    return (id _Nonnull)object;
 }
 
 + (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate requestConfiguration:(psc_request_block)requestConfigurationBlock inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
