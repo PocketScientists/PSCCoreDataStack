@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSManagedObjectID *permanentObjectID;
 
-+ (instancetype _Nonnull)newObjectInContext:(NSManagedObjectContext *)context;
-+ (instancetype _Nonnull)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(nullable id)value inContext:(NSManagedObjectContext *)context;
++ (instancetype)newObjectInContext:(NSManagedObjectContext *)context;
++ (instancetype)existingOrNewObjectWithAttribute:(NSString *)attribute matchingValue:(nullable id)value inContext:(NSManagedObjectContext *)context;
 
 + (NSUInteger)deleteAllMatchingPredicate:(nullable NSPredicate *)predicate
                     requestConfiguration:(nullable psc_request_block)requestConfigurationBlock
