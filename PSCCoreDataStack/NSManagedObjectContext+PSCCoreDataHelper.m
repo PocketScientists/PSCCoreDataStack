@@ -20,18 +20,18 @@
 
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait error:(__autoreleasing NSError **)error {
     dispatch_block_t parentCheck = ^{
-        if (self.parentContext.hasChanges) {
-            dispatch_block_t saveParent = ^{
-                [self.parentContext save:error];
-            };
-            
-            if (self.parentContext.concurrencyType == NSConfinementConcurrencyType) {
-                saveParent();
-            } else if (wait) {
-                [self.parentContext performBlockAndWait:saveParent];
-            } else {
-                [self.parentContext performBlock:saveParent];
-            }
+        if (wait) {
+            [self.parentContext performBlockAndWait:^{
+                if (self.parentContext.hasChanges) {
+                    [self.parentContext save:error];
+                }
+            }];
+        } else {
+            [self.parentContext performBlock:^{
+                if (self.parentContext.hasChanges) {
+                    [self.parentContext save:error];
+                }
+            }];
         }
     };
 
@@ -66,8 +66,8 @@
 
 - (void)saveAndPropagateToParentContextBlocking:(BOOL)wait success:(void(^)(void))successBlock failure:(void(^)(NSError *error))failureBlock {
     dispatch_block_t parentCheck = ^{
-        if (self.parentContext.hasChanges) {
-            dispatch_block_t saveParent = ^{
+        dispatch_block_t saveParent = ^{
+            if (self.parentContext.hasChanges) {
                 NSError *error = nil;
                 if ([self.parentContext save:&error]) {
                     if (successBlock) {
@@ -76,15 +76,15 @@
                 } else if (failureBlock) {
                     failureBlock(error);
                 }
-            };
-            
-            if (wait) {
-                [self.parentContext performBlockAndWait:saveParent];
-            } else {
-                [self.parentContext performBlock:saveParent];
+            } else if (successBlock) {
+                successBlock();
             }
-        } else if (successBlock) {
-            successBlock();
+        };
+
+        if (wait) {
+            [self.parentContext performBlockAndWait: saveParent];
+        } else {
+            [self.parentContext performBlock: saveParent];
         }
     };
     

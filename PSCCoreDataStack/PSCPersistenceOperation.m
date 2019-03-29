@@ -3,7 +3,7 @@
 #import "NSManagedObjectContext+PSCCoreDataHelper.h"
 #import "PSCLogging.h"
 
-
+// the queue used in persistDataInBackgroundWithParentContext:block:completion:
 static dispatch_queue_t _psc_persistence_queue = NULL;
 
 

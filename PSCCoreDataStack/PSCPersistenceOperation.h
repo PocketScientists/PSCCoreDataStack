@@ -9,13 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 typedef BOOL(^psc_persistence_block)(NSManagedObjectContext *localContext);
 
-// the queue used in persistDataInBackgroundWithParentContext:block:completion:
-dispatch_queue_t psc_persistence_queue(void);
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface PSCPersistenceOperation : NSOperation
 
