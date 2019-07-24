@@ -27,6 +27,7 @@ typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
 + (NSUInteger)deleteAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 
 + (NSFetchRequest *)requestAllMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
++ (NSFetchRequest *)requestBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(NSPredicate *)predicate error:(__autoreleasing NSError **)error;
 + (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error;
 
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate
@@ -35,6 +36,7 @@ typedef void(^psc_request_block)(NSFetchRequest *fetchRequest);
                                  error:(NSError **)error;
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 + (instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
++ (NSArray *)fetchBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error;
 
 + (NSUInteger)countOfObjectsMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error;
 

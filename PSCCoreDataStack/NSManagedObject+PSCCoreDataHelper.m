@@ -86,6 +86,16 @@
     return request;
 }
 
++ (NSFetchRequest *)requestBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(NSPredicate *)predicate error:(__autoreleasing NSError **)error {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    
+    request.fetchLimit = batchSize;
+    request.fetchOffset = offset;
+    request.predicate = predicate;
+    
+    return request;
+}
+
 + (NSFetchRequest *)requestFirstMatchingPredicate:(NSPredicate *)predicate error:(NSError **)error {
     NSFetchRequest *request = [self requestAllMatchingPredicate:predicate error:error];
 
@@ -107,6 +117,13 @@
 
 + (NSArray *)fetchAllMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
     return [self fetchAllMatchingPredicate:predicate requestConfiguration:nil inContext:context error:error];
+}
+
++ (NSArray *)fetchBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(__autoreleasing NSError **)error {
+    NSFetchRequest *request = [self requestBatchOfSize:batchSize atOffset:offset withMatchingPredicate:predicate error:error];
+    
+    NSArray *objects = [context executeFetchRequest:request error:error];
+    return objects;
 }
 
 + (instancetype)fetchFirstMatchingPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)error {
