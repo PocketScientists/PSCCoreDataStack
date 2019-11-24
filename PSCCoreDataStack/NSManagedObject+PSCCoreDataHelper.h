@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSUInteger)deleteAllMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
 + (NSFetchRequest *)requestAllMatchingPredicate:(nullable NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
++ (NSFetchRequest *)requestBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(nullable NSPredicate *)predicate error:(NSError * _Nullable *)error;
 + (NSFetchRequest *)requestFirstMatchingPredicate:(nullable NSPredicate *)predicate error:(NSError * _Nullable * _Nullable)error;
 
 + (nullable NSArray *)fetchAllMatchingPredicate:(nullable NSPredicate *)predicate
@@ -36,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
                                           error:(NSError * _Nullable * _Nullable)error;
 + (nullable NSArray *)fetchAllMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 + (nullable instancetype)fetchFirstMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
++ (NSArray *)fetchBatchOfSize:(NSUInteger)batchSize atOffset:(NSUInteger)offset withMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable *)error;
 
 + (NSUInteger)countOfObjectsMatchingPredicate:(nullable NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError * _Nullable * _Nullable)error;
 
