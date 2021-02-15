@@ -70,7 +70,6 @@
 		9B5FDB5816FC7025002FA5A6 /* PSCFetchedResultsControllerUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCFetchedResultsControllerUpdater.m; sourceTree = "<group>"; };
 		9B5FDB5A16FC7387002FA5A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9B6B3C56170F5496004DFAD7 /* PSCLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSCLogging.h; sourceTree = "<group>"; };
-		A9022B942564311C00C7CC3B /* tmp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tmp.xcconfig; sourceTree = "<group>"; };
 		A96C0B40238A0B8300BF7682 /* PSCCoreData.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = PSCCoreData.podspec; sourceTree = "<group>"; };
 		A9BD92851FF15E9900F4B027 /* PSCCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PSCCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BD92871FF15E9900F4B027 /* PSCCoreData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSCCoreData.h; sourceTree = "<group>"; };
@@ -103,7 +102,6 @@
 		9B5FDB0D16FC65AB002FA5A6 = {
 			isa = PBXGroup;
 			children = (
-				A9022B942564311C00C7CC3B /* tmp.xcconfig */,
 				A96C0B40238A0B8300BF7682 /* PSCCoreData.podspec */,
 				9B5FDB1B16FC65AB002FA5A6 /* PSCCoreDataStack */,
 				A9BD92861FF15E9900F4B027 /* PSCCoreData */,
@@ -335,7 +333,6 @@
 /* Begin XCBuildConfiguration section */
 		9B5FDB3916FC65AC002FA5A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9022B942564311C00C7CC3B /* tmp.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -383,7 +380,6 @@
 		};
 		9B5FDB3A16FC65AC002FA5A6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9022B942564311C00C7CC3B /* tmp.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
