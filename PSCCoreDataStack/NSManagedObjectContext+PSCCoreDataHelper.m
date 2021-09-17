@@ -88,27 +88,36 @@
         }
     };
     
-    if (self.hasChanges) {
-        dispatch_block_t saveChild = ^{
-            NSError *error = nil;
-            if ([self save:&error]) {
-                parentCheck();
+    dispatch_block_t saveChild = ^{
+        NSError *error = nil;
+        if ([self save:&error]) {
+            parentCheck();
+        }
+        else {
+            if (failureBlock) {
+                failureBlock(error);
+            }
+        }
+    };
+
+    if (wait) {
+        [self performBlockAndWait:^{
+            if (self.hasChanges) {
+                saveChild();
             }
             else {
-                if (failureBlock) {
-                    failureBlock(error);
-                }
+                parentCheck();
             }
-        };
-
-        if (wait) {
-            [self performBlockAndWait:saveChild];
-        } else {
-            [self performBlock:saveChild];
-        }
-    }
-    else {
-        parentCheck();
+        }];
+    } else {
+        [self performBlock:^{
+            if (self.hasChanges) {
+                saveChild();
+            }
+            else {
+                parentCheck();
+            }
+        }];
     }
 }
 
