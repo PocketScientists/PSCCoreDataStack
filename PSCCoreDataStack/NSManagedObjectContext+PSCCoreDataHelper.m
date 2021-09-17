@@ -35,28 +35,28 @@
         }
     };
 
-    if (self.hasChanges) {
-        if (self.concurrencyType == NSConfinementConcurrencyType) {
-            if ([self save:error]) {
+    if (wait) {
+        [self performBlockAndWait:^{
+            if (self.hasChanges) {
+                if ([self save:error]) {
+                    parentCheck();
+                }
+            }
+            else {
                 parentCheck();
             }
-        } else if (wait) {
-            [self performBlockAndWait:^{
+        }];
+    } else {
+        [self performBlock:^{
+            if (self.hasChanges) {
                 if ([self save:error]) {
                     parentCheck();
                 }
-            }];
-        }
-        else {
-            [self performBlock:^{
-                if ([self save:error]) {
-                    parentCheck();
-                }
-            }];
-        }
-    }
-    else {
-        parentCheck();
+            }
+            else {
+                parentCheck();
+            }
+        }];
     }
 }
 
