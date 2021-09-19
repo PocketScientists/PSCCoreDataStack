@@ -93,28 +93,30 @@ static dispatch_queue_t _psc_persistence_queue = NULL;
 
 - (void)main {
     NSManagedObjectContext *localContext = [self.parentContext newChildContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    BOOL save = NO;
+    [localContext performBlock:^{
+        BOOL save = NO;
 
-    // either persist via block (if set), or call method in subclass
-    if (self.persistenceBlock != nil) {
-        save = self.persistenceBlock(localContext);
-    } else {
-        save = [self persistWithContext:localContext];
-    }
-
-    if (save && localContext.hasChanges) {
-        NSError *error = nil;
-        
-        [self willSaveContext:localContext];
-
-        if (![localContext save:&error]) {
-            [self didFailToSaveContext:localContext error:error];
+        // either persist via block (if set), or call method in subclass
+        if (self.persistenceBlock != nil) {
+            save = self.persistenceBlock(localContext);
         } else {
-            [self didSaveContext:localContext];
+            save = [self persistWithContext:localContext];
         }
-    } else {
-        [self didNotSaveContext:localContext];
-    }
+
+        if (save && localContext.hasChanges) {
+            NSError *error = nil;
+            
+            [self willSaveContext:localContext];
+
+            if (![localContext save:&error]) {
+                [self didFailToSaveContext:localContext error:error];
+            } else {
+                [self didSaveContext:localContext];
+            }
+        } else {
+            [self didNotSaveContext:localContext];
+        }
+    }];
 }
 
 ////////////////////////////////////////////////////////////////////////
